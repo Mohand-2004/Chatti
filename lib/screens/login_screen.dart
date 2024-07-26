@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/widgets/entry.dart';
-
 class LoginScreen extends StatelessWidget{
   const LoginScreen({super.key});
   @override
@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget{
                   Expanded(
                     child: Entry(
                       hinttext: 'password',
-                      icon: Icons.person,
+                      icon: Icons.lock,
                       controller: TextEditingController()
                     ),
                   ),
@@ -82,7 +82,35 @@ class LoginScreen extends StatelessWidget{
                   SizedBox(height: 15.h,),
                 ],
               ),
-            )
+            ),
+
+            // login button row
+            Row(
+              children: [
+                // right space
+                const Spacer(),
+
+                // login button
+                ElevatedButton(
+                  onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.orange,
+                    fixedSize: Size(80.w+20,40.h),
+                  ),
+                  child: Text(
+                    'login',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.r
+                    ),
+                  ),
+                ),
+
+                // left space
+                SizedBox(width: 15.w,)
+              ],
+            ),
           ],
         ),
       ),
