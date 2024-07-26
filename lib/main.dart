@@ -2,7 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'screens/home_page.dart';
+import 'package:my_app/screens/login_screen.dart';
 class MyApp extends StatelessWidget{
   const MyApp({super.key});
   @override
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget{
     return const ScreenUtilInit(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: LoginScreen(),
       ),
     );
   }
