@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/models/app_colors.dart';
+import 'package:my_app/screens/signup_screen.dart';
 import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
 // ignore: must_be_immutable
@@ -142,7 +143,16 @@ class LoginScreen extends StatelessWidget{
 
                 // signUp text buttton
                 GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context){
+                          return SignupScreen();
+                        }, 
+                      )
+                    );
+                  },
                   child: Text(
                     '\t\tSignUp',
                     style: TextStyle(
