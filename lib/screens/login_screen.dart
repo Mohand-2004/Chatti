@@ -108,9 +108,46 @@ class LoginScreen extends StatelessWidget{
                 ),
 
                 // left space
-                SizedBox(width: 15.w,)
+                SizedBox(width: 15.w,),
               ],
             ),
+
+            // divider
+            Divider(
+              indent: 50.w,
+              endIndent: 50.w,
+              color: Colors.grey,
+              thickness: 2.h,
+              height: 50.h,
+            ),
+
+            // signup section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // don't have an account text
+                Text(
+                  "Don't have an account ?",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.black
+                  ),
+                ),
+
+                // signUp text buttton
+                GestureDetector(
+                  onTap: (){},
+                  child: Text(
+                    '\t\tSignUp',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.orange
+                    ),
+                  ),
+                )
+              ],
+            ), 
           ],
         ),
       ),
