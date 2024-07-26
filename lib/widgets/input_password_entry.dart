@@ -78,8 +78,8 @@ class _InputPasswordEntryState extends State<InputPasswordEntry>{
             SizedBox(
               height: double.infinity,
               child: VerticalDivider(
-                indent: 16,
-                endIndent: 16,
+                indent: 16.h,
+                endIndent: 16.h,
                 color: Colors.grey,
                 thickness: 2.sp,
                 width: showicon ? 30.w+10 : 25.w,

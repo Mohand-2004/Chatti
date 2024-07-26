@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget{
   const MyApp({super.key});
   @override
   Widget build(BuildContext context){
-    return const ScreenUtilInit(
+    return ScreenUtilInit(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: LoginScreen(),
@@ -24,6 +24,6 @@ void main(){
   //   DeviceOrientation.portraitUp,
   //   ]
   // );
-  runApp(DevicePreview(builder:(context) => const MyApp(),));
-  //runApp(const MyApp());
+  //runApp(DevicePreview(builder:(context) => const MyApp(),));
+  runApp(const MyApp());
 }

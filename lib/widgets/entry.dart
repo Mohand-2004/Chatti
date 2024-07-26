@@ -51,8 +51,8 @@ class _EntryState extends State<Entry>{
             SizedBox(
               height: double.infinity,
               child: VerticalDivider(
-                indent: 16,
-                endIndent: 16,
+                indent: 16.h,
+                endIndent: 16.h,
                 color: Colors.grey,
                 thickness: 2.sp,
                 width: 20.w,
