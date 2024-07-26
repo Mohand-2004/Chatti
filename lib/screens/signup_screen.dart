@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/widgets/create_password_entry.dart';
 import 'dart:io' show Platform;
-
 import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
+// ignore: must_be_immutable
 class SignupScreen extends StatelessWidget{
-  const SignupScreen({super.key});
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
+  SignupScreen({super.key});
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -90,7 +93,7 @@ class SignupScreen extends StatelessWidget{
                   child: Entry(
                     hinttext: 'user name',
                     icon: Icons.person,
-                    controller: TextEditingController(),
+                    controller: usernameController,
                   ),
                 ),
 
@@ -102,7 +105,7 @@ class SignupScreen extends StatelessWidget{
                   child: CreatePasswordEntry(
                     hinttext: 'password',
                     icon: Icons.lock,
-                    controller: TextEditingController(),
+                    controller: passwordController,
                   ),
                 ),
 
@@ -114,7 +117,7 @@ class SignupScreen extends StatelessWidget{
                   child: InputPasswordEntry(
                     hinttext: 'confirm password',
                     icon: Icons.lock_reset_rounded,
-                    controller: TextEditingController(),
+                    controller: confirmpasswordController,
                   ),
                 ),
 

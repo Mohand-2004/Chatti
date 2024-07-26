@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_app/Check_password.dart';
+import 'package:my_app/check_password.dart';
 import 'package:my_app/models/app_colors.dart';
 // ignore: must_be_immutable
 class CreatePasswordEntry extends StatefulWidget{
