@@ -7,7 +7,6 @@ class Entry extends StatefulWidget{
   final String hinttext;
   final IconData icon;
   final TextEditingController controller;
-  // String? text;
   String? errortext;
   String? Function(String? string)? validations;
   Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations});
@@ -40,7 +39,7 @@ class _EntryState extends State<Entry>{
             Expanded(
               flex: 15,
               child: Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: 10.w),
                 child: Icon(
                   size: 40.r,
                   widget.icon,color: AppColors.hellBlue,

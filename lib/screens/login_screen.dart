@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/widgets/entry.dart';
+import 'package:my_app/widgets/input_password_entry.dart';
 class LoginScreen extends StatelessWidget{
   const LoginScreen({super.key});
   @override
@@ -59,6 +60,7 @@ class LoginScreen extends StatelessWidget{
                   // top space
                   SizedBox(height: 15.h,),
 
+                  // user name feild
                   Expanded(
                     child: Entry(
                       hinttext: 'user name',
@@ -70,8 +72,9 @@ class LoginScreen extends StatelessWidget{
                   // space between
                   SizedBox(height: 15.h,),
 
+                  // password feild
                   Expanded(
-                    child: Entry(
+                    child: InputPasswordEntry(
                       hinttext: 'password',
                       icon: Icons.lock,
                       controller: TextEditingController()
