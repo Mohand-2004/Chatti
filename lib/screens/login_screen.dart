@@ -13,158 +13,161 @@ class LoginScreen extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // chat image
-            Image(
-              width: 200.r,
-              height: 200.r,
-              image: const AssetImage('assets/images/app icon.png'),
-            ),
-
-            // space between
-            const SizedBox(height: 10,),
-
-            // login text row
-            Row(
-              children: [
-                // left space
-                SizedBox(width: 20.w,),
-
-                // login text
-                Text(
-                  'Login to your Account',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'impact',
-                    fontSize: 30.sp
-                  ),
-                ),
-
-                // right space
-                const Spacer(),
-              ],
-            ),
-
-            // space between
-            const SizedBox(height: 10,),
-
-            // text field space
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.w),
-              padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
-              height: 250.r,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // chat image
+              Image(
+                width: 200.r,
+                height: 200.r,
+                image: const AssetImage('assets/images/app icon.png'),
+              ),
+        
+              // space between
+              const SizedBox(height: 10,),
+        
+              // login text row
+              Row(
                 children: [
-                  // top space
-                  SizedBox(height: 15.h,),
-
-                  // user name feild
-                  Expanded(
-                    child: Entry(
-                      hinttext: 'user name',
-                      icon: Icons.person,
-                      controller: usernameController,
+                  // left space
+                  SizedBox(width: 20.w,),
+        
+                  // login text
+                  Text(
+                    'Login to your Account',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'impact',
+                      fontSize: 30.sp
                     ),
                   ),
-
-                  // space between
-                  SizedBox(height: 15.h,),
-
-                  // password feild
-                  Expanded(
-                    child: InputPasswordEntry(
-                      hinttext: 'password',
-                      icon: Icons.lock,
-                      controller: passwordController,
-                    ),
-                  ),
-
-                  // bottom space
-                  SizedBox(height: 15.h,),
+        
+                  // right space
+                  const Spacer(),
                 ],
               ),
-            ),
-
-            // login button row
-            Row(
-              children: [
-                // right space
-                const Spacer(),
-
-                // login button
-                ElevatedButton(
-                  onPressed: (){},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.orange,
-                    fixedSize: Size(80.w+20,40.h),
-                  ),
-                  child: Text(
-                    'login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.r
+        
+              // space between
+              const SizedBox(height: 10,),
+        
+              // text field space
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
+                height: 250.r,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    // top space
+                    SizedBox(height: 15.h,),
+        
+                    // user name feild
+                    Expanded(
+                      child: Entry(
+                        hinttext: 'user name',
+                        icon: Icons.person,
+                        controller: usernameController,
+                      ),
+                    ),
+        
+                    // space between
+                    SizedBox(height: 15.h,),
+        
+                    // password feild
+                    Expanded(
+                      child: InputPasswordEntry(
+                        hinttext: 'password',
+                        icon: Icons.lock,
+                        controller: passwordController,
+                      ),
+                    ),
+        
+                    // bottom space
+                    SizedBox(height: 15.h,),
+                  ],
+                ),
+              ),
+        
+              // login button row
+              Row(
+                children: [
+                  // right space
+                  const Spacer(),
+        
+                  // login button
+                  ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.orange,
+                      fixedSize: Size(80.w+20,40.h),
+                    ),
+                    child: Text(
+                      'login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.r
+                      ),
                     ),
                   ),
-                ),
-
-                // left space
-                SizedBox(width: 15.w,),
-              ],
-            ),
-
-            // divider
-            Divider(
-              indent: 50.w,
-              endIndent: 50.w,
-              color: Colors.grey,
-              thickness: 2.h,
-              height: 50.h,
-            ),
-
-            // signup section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // don't have an account text
-                Text(
-                  "Don't have an account ?",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: Colors.black
-                  ),
-                ),
-
-                // signUp text buttton
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context){
-                          return SignupScreen();
-                        }, 
-                      )
-                    );
-                  },
-                  child: Text(
-                    '\t\tSignUp',
+        
+                  // left space
+                  SizedBox(width: 15.w,),
+                ],
+              ),
+        
+              // divider
+              Divider(
+                indent: 50.w,
+                endIndent: 50.w,
+                color: Colors.grey,
+                thickness: 2.h,
+                height: 50.h,
+              ),
+        
+              // signup section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // don't have an account text
+                  Text(
+                    "Don't have an account ?",
                     style: TextStyle(
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.orange
+                      color: Colors.black
                     ),
                   ),
-                )
-              ],
-            ), 
-          ],
+        
+                  // signUp text buttton
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context){
+                            return SignupScreen();
+                          }, 
+                        )
+                      );
+                    },
+                    child: Text(
+                      '\t\tSignUp',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.orange
+                      ),
+                    ),
+                  )
+                ],
+              ), 
+            ],
+          ),
         ),
       ),
     );

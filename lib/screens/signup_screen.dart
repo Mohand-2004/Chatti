@@ -41,112 +41,118 @@ class SignupScreen extends StatelessWidget{
           ),
         ),
       ),
-      body: Column(
-        children: [
-          // chat image
-          Image(
-            width: 200.r,
-            height: 200.r,
-            image: const AssetImage('assets/images/app icon.png'),
-          ),
-
-          // space between
-          const SizedBox(height: 10,),
-
-          // signup text row
-          Row(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*0.89,
+          child: Column(
             children: [
-              // left space
-              SizedBox(width: 20.w,),
-
-              // signup text
-              Text(
-                'Create a new Account',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'impact',
-                  fontSize: 30.sp
+              // chat image
+              Image(
+                width: 200.r,
+                height: 200.r,
+                image: const AssetImage('assets/images/app icon.png'),
+              ),
+          
+              // space between
+              const SizedBox(height: 10,),
+          
+              // signup text row
+              Row(
+                children: [
+                  // left space
+                  SizedBox(width: 20.w,),
+          
+                  // signup text
+                  Text(
+                    'Create a new Account',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'impact',
+                      fontSize: 30.sp
+                    ),
+                  ),
+          
+                  // right space
+                  const Spacer(),
+                ],
+              ),
+          
+              // space between
+              const SizedBox(height: 10,),
+          
+              // text field space
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10.w),
+                padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
+                height: 290.h,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    // top space
+                    SizedBox(height: 15.h,),
+          
+                    // user name feild
+                    Expanded(
+                      child: Entry(
+                        hinttext: 'user name',
+                        icon: Icons.person,
+                        controller: usernameController,
+                      ),
+                    ),
+          
+                    // space between
+                    SizedBox(height: 15.h,),
+          
+                    // password feild
+                    Expanded(
+                      child: CreatePasswordEntry(
+                        hinttext: 'password',
+                        icon: Icons.lock,
+                        controller: passwordController,
+                      ),
+                    ),
+          
+                    // space between
+                    SizedBox(height: 15.h,),
+          
+                    // confirm password feild
+                    Expanded(
+                      child: InputPasswordEntry(
+                        hinttext: 'confirm password',
+                        icon: Icons.lock_reset_rounded,
+                        controller: confirmpasswordController,
+                      ),
+                    ),
+          
+                    // bottom space
+                    SizedBox(height: 15.h,),
+                  ],
                 ),
               ),
-
-              // right space
-              const Spacer(),
+          
+              // signUp button
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                child: ElevatedButton(
+                  onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.orange,
+                    fixedSize: Size(MediaQuery.of(context).size.width,40.h),
+                  ),
+                  child: Text(
+                    'SignUp',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.r
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-
-          // space between
-          const SizedBox(height: 10,),
-
-          // text field space
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
-            padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
-            height: 300.h,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                // top space
-                SizedBox(height: 15.h,),
-
-                // user name feild
-                Expanded(
-                  child: Entry(
-                    hinttext: 'user name',
-                    icon: Icons.person,
-                    controller: usernameController,
-                  ),
-                ),
-
-                // space between
-                SizedBox(height: 15.h,),
-
-                // password feild
-                Expanded(
-                  child: CreatePasswordEntry(
-                    hinttext: 'password',
-                    icon: Icons.lock,
-                    controller: passwordController,
-                  ),
-                ),
-
-                // space between
-                SizedBox(height: 15.h,),
-
-                // confirm password feild
-                Expanded(
-                  child: InputPasswordEntry(
-                    hinttext: 'confirm password',
-                    icon: Icons.lock_reset_rounded,
-                    controller: confirmpasswordController,
-                  ),
-                ),
-
-                // bottom space
-                SizedBox(height: 15.h,),
-              ],
-            ),
-          ),
-
-          // signUp button
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: ElevatedButton(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.orange,
-                fixedSize: Size(MediaQuery.of(context).size.width,40.h),
-              ),
-              child: Text(
-                'SignUp',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.r
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       )
     );
   }
