@@ -14,7 +14,8 @@ class LoginScreen extends StatelessWidget{
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: SizedBox(
+        child: Container(
+          color: Colors.white,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -57,6 +58,7 @@ class LoginScreen extends StatelessWidget{
         
               // text field space
               Container(
+                color: Colors.white,
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
                 padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
                 height: 250.r,

@@ -154,7 +154,7 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
                   errorStyle: TextStyle(
                     color: errortextcolor,
                     fontFamily: 'impact',
-                    fontSize: 17.sp
+                    fontSize: 15.sp
                   ),
                   border: InputBorder.none,
                   hintText: widget.hinttext,

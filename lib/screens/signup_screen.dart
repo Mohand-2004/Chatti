@@ -14,6 +14,7 @@ class SignupScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size(
           MediaQuery.of(context).size.width,
@@ -42,7 +43,8 @@ class SignupScreen extends StatelessWidget{
         ),
       ),
       body: SingleChildScrollView(
-        child: SizedBox(
+        child: Container(
+          color: Colors.white,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height*0.89,
           child: Column(

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25337554903",
+    "project_id": "chatii-46e28",
+    "storage_bucket": "chatii-46e28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25337554903:android:dcaeaf5ba37aec68038d92",
+        "android_client_info": {
+          "package_name": "com.example.bmi_calculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS1zk3BuFqIGlgC3UFFKefRkGDClhJKf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
