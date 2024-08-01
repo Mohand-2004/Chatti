@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_app/Check_password.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/widgets/create_password_entry.dart';
 import 'dart:io' show Platform;
@@ -7,7 +8,8 @@ import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
 // ignore: must_be_immutable
 class SignupScreen extends StatelessWidget{
-  TextEditingController usernameController = TextEditingController();
+  GlobalKey<FormState> signUpValidationsKey = GlobalKey();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   SignupScreen({super.key});
@@ -89,47 +91,68 @@ class SignupScreen extends StatelessWidget{
                 padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
                 height: 290.h,
                 width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    // top space
-                    SizedBox(height: 15.h,),
-          
-                    // user name feild
-                    Expanded(
-                      child: Entry(
-                        hinttext: 'user name',
-                        icon: Icons.person,
-                        controller: usernameController,
+                child: Form(
+                  key: signUpValidationsKey,
+                  child: Column(
+                    children: [
+                      // top space
+                      SizedBox(height: 15.h,),
+                            
+                      // user name feild
+                      Expanded(
+                        child: Entry(
+                          validations: (value){
+                            if(value == null || value == ''){
+                              return 'Email feild is required';
+                            }
+                            return null;
+                          },
+                          hinttext: 'Email',
+                          icon: Icons.person,
+                          controller: emailController,
+                        ),
                       ),
-                    ),
-          
-                    // space between
-                    SizedBox(height: 15.h,),
-          
-                    // password feild
-                    Expanded(
-                      child: CreatePasswordEntry(
-                        hinttext: 'password',
-                        icon: Icons.lock,
-                        controller: passwordController,
+                            
+                      // space between
+                      SizedBox(height: 15.h,),
+                            
+                      // password feild
+                      Expanded(
+                        child: CreatePasswordEntry(
+                          validations: (value){
+                            if(value == null || value == ''){
+                              return 'Password feild is required';
+                            }
+                            else if(stronglevel(value) == 'weak' || stronglevel(value) == 'medium'){
+                              return 'You must create a strong password';
+                            }
+                            else if(value.length < 8){
+                              return 'Password must be at least 8 characters';
+                            }
+                            return null;
+                          },
+                          hinttext: 'password',
+                          icon: Icons.lock,
+                          controller: passwordController,
+                        ),
                       ),
-                    ),
-          
-                    // space between
-                    SizedBox(height: 15.h,),
-          
-                    // confirm password feild
-                    Expanded(
-                      child: InputPasswordEntry(
-                        hinttext: 'confirm password',
-                        icon: Icons.lock_reset_rounded,
-                        controller: confirmpasswordController,
+                            
+                      // space between
+                      SizedBox(height: 15.h,),
+                            
+                      // confirm password feild
+                      Expanded(
+                        child: InputPasswordEntry(
+                          hinttext: 'confirm password',
+                          icon: Icons.lock_reset_rounded,
+                          controller: confirmpasswordController,
+                        ),
                       ),
-                    ),
-          
-                    // bottom space
-                    SizedBox(height: 15.h,),
-                  ],
+                            
+                      // bottom space
+                      SizedBox(height: 15.h,),
+                    ],
+                  ),
                 ),
               ),
           
@@ -137,7 +160,11 @@ class SignupScreen extends StatelessWidget{
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    if(signUpValidationsKey.currentState!.validate()){
+                      print(emailController.text);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.orange,
                     fixedSize: Size(MediaQuery.of(context).size.width,40.h),

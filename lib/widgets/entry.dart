@@ -68,10 +68,15 @@ class _EntryState extends State<Entry>{
                     widget.errortext = null;
                   });
                 },
-                validator: widget.validations,
+                validator: (value){
+                  setState(() {
+                    widget.errortext = widget.validations!(value);
+                  });
+                  return null;
+                },
                 controller: widget.controller,
                 decoration: InputDecoration(
-                  errorText: widget.errortext,
+                  errorText: widget.errortext,  
                   errorStyle: TextStyle(
                     color: Colors.red,
                     fontFamily: 'impact',

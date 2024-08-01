@@ -7,9 +7,9 @@ class InputPasswordEntry extends StatefulWidget{
   final String hinttext;
   final IconData icon;
   final TextEditingController controller;
-  String? validationname;
   String? errortext;
-  InputPasswordEntry({super.key,required this.hinttext,required this.icon,this.errortext,this.validationname,required this.controller});
+  String Function(String? value)? validations;
+  InputPasswordEntry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations});
   @override
   State<InputPasswordEntry> createState() => _InputPasswordEntryState();
 }
@@ -91,9 +91,9 @@ class _InputPasswordEntryState extends State<InputPasswordEntry>{
               flex: 84,
               child: TextFormField(
                 validator: (value){
-                  if(value == null || value == ''){
-                    return "${widget.validationname} Feild is required";
-                  }
+                  setState(() {
+                    widget.errortext = widget.validations!(value);
+                  });
                   return null;
                 },
                 onTapOutside: (event){
@@ -113,9 +113,6 @@ class _InputPasswordEntryState extends State<InputPasswordEntry>{
                     showicon = true;
                   });
                 },
-                // onChanged: (value){
-                //   widget.text = value;
-                // },
                 controller: widget.controller,
                 obscureText: _hiddentext,
                 onFieldSubmitted: (value){

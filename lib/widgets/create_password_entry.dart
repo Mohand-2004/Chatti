@@ -21,6 +21,7 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
   bool showicon = false;
   Widget iconbutton = const Icon(Icons.remove_red_eye_rounded);
   Color errortextcolor = Colors.red;
+  int errortextSize = 15;
   void showtext(){
     void hidetext(){
       setState((){
@@ -94,7 +95,24 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
             Expanded(
               flex: 84,
               child: TextFormField(
-                validator: widget.validations,
+                validator: (value){
+                  setState(() {
+                    errortextcolor = Colors.red;
+                    widget.errortext = widget.validations!(value);
+                    switch(widget.errortext){
+                      case 'You must create a strong password':
+                        errortextSize = 13;
+                        break;
+                      case 'Password must be at least 8 characters':
+                        errortextSize = 11;
+                        break;
+                      default:
+                        errortextSize = 15;
+                        break;
+                    }
+                  });
+                  return null;
+                },
                 onTapOutside: (event){
                   setState((){
                     if(widget.controller.text == ''){
@@ -114,6 +132,7 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
                       widget.errortext = null;
                     }
                     showicon = true;
+                    errortextSize = 15;
                   });
                 },
                 onChanged: (value){
@@ -124,13 +143,13 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
                       }
                       else{
                         widget.errortext = stronglevel(value);
-                        if(stronglevel(value) == 'medium'){
+                        if(widget.errortext == 'medium'){
                           errortextcolor = Colors.amber;
                         }
-                        else if(stronglevel(value) == 'strong'){
+                        else if(widget.errortext == 'strong'){
                           errortextcolor = Colors.greenAccent;
                         }
-                        else if(stronglevel(value) == 'very strong'){
+                        else if(widget.errortext == 'very strong'){
                           errortextcolor = Colors.green;
                         }
                         else{
@@ -154,7 +173,7 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
                   errorStyle: TextStyle(
                     color: errortextcolor,
                     fontFamily: 'impact',
-                    fontSize: 15.sp
+                    fontSize: errortextSize.sp
                   ),
                   border: InputBorder.none,
                   hintText: widget.hinttext,
