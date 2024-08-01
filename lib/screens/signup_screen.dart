@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_app/Check_password.dart';
+import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/widgets/create_password_entry.dart';
 import 'dart:io' show Platform;
@@ -8,10 +8,6 @@ import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
 // ignore: must_be_immutable
 class SignupScreen extends StatelessWidget{
-  GlobalKey<FormState> signUpValidationsKey = GlobalKey();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
   SignupScreen({super.key});
   @override
   Widget build(BuildContext context){
@@ -92,7 +88,7 @@ class SignupScreen extends StatelessWidget{
                 height: 290.h,
                 width: MediaQuery.of(context).size.width,
                 child: Form(
-                  key: signUpValidationsKey,
+                  key: coreController.signUpValidationsKey,
                   child: Column(
                     children: [
                       // top space
@@ -109,7 +105,7 @@ class SignupScreen extends StatelessWidget{
                           },
                           hinttext: 'Email',
                           icon: Icons.person,
-                          controller: emailController,
+                          controller: coreController.emailSignController,
                         ),
                       ),
                             
@@ -123,7 +119,7 @@ class SignupScreen extends StatelessWidget{
                             if(value == null || value == ''){
                               return 'Password feild is required';
                             }
-                            else if(stronglevel(value) == 'weak' || stronglevel(value) == 'medium'){
+                            else if(coreController.stronglevel(value) == 'weak' || coreController.stronglevel(value) == 'medium'){
                               return 'You must create a strong password';
                             }
                             else if(value.length < 8){
@@ -133,7 +129,7 @@ class SignupScreen extends StatelessWidget{
                           },
                           hinttext: 'password',
                           icon: Icons.lock,
-                          controller: passwordController,
+                          controller: coreController.passwordSignController,
                         ),
                       ),
                             
@@ -145,7 +141,7 @@ class SignupScreen extends StatelessWidget{
                         child: InputPasswordEntry(
                           hinttext: 'confirm password',
                           icon: Icons.lock_reset_rounded,
-                          controller: confirmpasswordController,
+                          controller: coreController.confirmpasswordController,
                         ),
                       ),
                             
@@ -161,8 +157,8 @@ class SignupScreen extends StatelessWidget{
                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                 child: ElevatedButton(
                   onPressed: (){
-                    if(signUpValidationsKey.currentState!.validate()){
-                      print(emailController.text);
+                    if(coreController.signUpValidationsKey.currentState!.validate()){
+                      print(coreController.emailSignController.text);
                     }
                   },
                   style: ElevatedButton.styleFrom(
