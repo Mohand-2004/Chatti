@@ -139,6 +139,12 @@ class SignupScreen extends StatelessWidget{
                       // confirm password feild
                       Expanded(
                         child: InputPasswordEntry(
+                          validations: (value) {
+                            if(coreController.passwordSignValidate() && coreController.emailSignController.text != '' && !coreController.matchPasswordsValidate()){
+                              return "Passwords don't match";
+                            }
+                            return null;
+                          },
                           hinttext: 'confirm password',
                           icon: Icons.lock_reset_rounded,
                           controller: coreController.confirmpasswordController,

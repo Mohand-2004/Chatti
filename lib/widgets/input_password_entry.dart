@@ -8,7 +8,7 @@ class InputPasswordEntry extends StatefulWidget{
   final IconData icon;
   final TextEditingController controller;
   String? errortext;
-  String Function(String? value)? validations;
+  String? Function(String? value)? validations;
   InputPasswordEntry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations});
   @override
   State<InputPasswordEntry> createState() => _InputPasswordEntryState();
