@@ -8,8 +8,9 @@ class Entry extends StatefulWidget{
   final IconData icon;
   final TextEditingController controller;
   String? errortext;
+  double? errorTextSize;
   String? Function(String? string)? validations;
-  Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations});
+  Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations,this.errorTextSize = 17});
   @override
   State<Entry> createState() => _EntryState();
 }
@@ -69,7 +70,8 @@ class _EntryState extends State<Entry>{
                   });
                 },
                 validator: (value){
-                  setState(() {
+                  setState((){
+                    widget.errorTextSize = 17;
                     widget.errortext = widget.validations!(value);
                   });
                   return null;
@@ -80,7 +82,7 @@ class _EntryState extends State<Entry>{
                   errorStyle: TextStyle(
                     color: Colors.red,
                     fontFamily: 'impact',
-                    fontSize: 17.sp
+                    fontSize: widget.errorTextSize?.sp
                   ),
                   border: InputBorder.none,
                   hintText: widget.hinttext,

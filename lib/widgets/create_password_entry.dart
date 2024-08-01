@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_app/check_password.dart';
+import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/models/app_colors.dart';
 // ignore: must_be_immutable
 class CreatePasswordEntry extends StatefulWidget{
@@ -142,7 +142,7 @@ class _CreatePasswordEntryState extends State<CreatePasswordEntry>{
                         widget.errortext == null;
                       }
                       else{
-                        widget.errortext = stronglevel(value);
+                        widget.errortext = coreController.stronglevel(value);
                         if(widget.errortext == 'medium'){
                           errortextcolor = Colors.amber;
                         }

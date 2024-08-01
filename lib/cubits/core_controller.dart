@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/cubits/signup%20auth%20cubit/signup_auth_cubit.dart';
 
 class CoreController{
   GlobalKey<FormState> signUpValidationsKey = GlobalKey();
   TextEditingController emailSignController = TextEditingController();
   TextEditingController passwordSignController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
+  SignupAuthCubit signupAuthCubit = SignupAuthCubit();
+
+  void signUp(){
+    signupAuthCubit.signUp(emailSignController.text,passwordSignController.text);
+  }
+
   bool passwordSignValidate(){
     if(passwordSignController.text == ''){
       return false;
