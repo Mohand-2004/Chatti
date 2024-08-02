@@ -12,14 +12,14 @@ class AdaptiveLoadingIndicator extends StatelessWidget{
   Widget build(BuildContext context) {
     return Center(
       child: Platform.isIOS ? CupertinoActivityIndicator(
-        color: Colors.white,
+        color: color,
         radius: iOSsize.r,
       ) : SizedBox(
         width: androidSize.r,
         height: androidSize.r,
         child: CircularProgressIndicator(
           strokeWidth: androidWidth.r,
-          color: Colors.white,
+          color: color,
         ),
       ),
     );

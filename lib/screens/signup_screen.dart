@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/cubits/core_controller.dart';
-import 'package:my_app/cubits/signup%20auth%20cubit/signup_auth_cubit.dart';
-import 'package:my_app/cubits/signup%20auth%20cubit/states.dart';
+import 'package:my_app/cubits/auth%20cubit/signup_auth_cubit.dart';
+import 'package:my_app/cubits/auth%20cubit/states.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/widgets/adaptive_loading_indicator.dart';
 import 'package:my_app/widgets/create_password_entry.dart';
@@ -19,12 +19,12 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => coreController.signupAuthCubit,
+        create: (context) => coreController.signUpAuthCubit,
         child: Stack(
           children: [
             GestureDetector(
               onTap: (){
-                coreController.signupAuthCubit.reset();
+                coreController.signUpAuthCubit.reset();
               },
               child: Scaffold(
                 backgroundColor: Colors.white,
@@ -36,8 +36,7 @@ class SignupScreen extends StatelessWidget {
                   child: Expanded(
                     child: SizedBox(
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            top: 30.h, left: Platform.isIOS ? 10.w : 7.w),
+                        padding: EdgeInsets.only(top: 30.h, left: Platform.isIOS ? 10.w : 7.w),
                         child: Row(
                           children: [
                             IconButton(
@@ -120,7 +119,7 @@ class SignupScreen extends StatelessWidget {
               
                                 // user name feild
                                 Expanded(
-                                  child: BlocBuilder<SignupAuthCubit, AuthState>(
+                                  child: BlocBuilder<SignUpAuthCubit, AuthState>(
                                     builder: (context, state) {
                                       return Entry(
                                         errorTextSize: (state is UsedEmailState? 12 : null),
@@ -210,7 +209,7 @@ class SignupScreen extends StatelessWidget {
                               backgroundColor: AppColors.orange,
                               fixedSize: Size(MediaQuery.of(context).size.width, 40.h),
                             ),
-                            child: BlocBuilder<SignupAuthCubit, AuthState>(
+                            child: BlocBuilder<SignUpAuthCubit, AuthState>(
                               builder: (context, state) {
                                 if (state is LoadingState) {
                                   return const AdaptiveLoadingIndicator();
@@ -236,7 +235,7 @@ class SignupScreen extends StatelessWidget {
             ),
 
             // succsess alert
-            BlocBuilder<SignupAuthCubit,AuthState>(
+            BlocBuilder<SignUpAuthCubit,AuthState>(
               builder: (context, state){
                 if (state is SuccessState){
                   return Center(
@@ -246,7 +245,7 @@ class SignupScreen extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       cancelCommand: (){
-                        coreController.signupAuthCubit.reset();
+                        coreController.signUpAuthCubit.reset();
                       },
                     )
                   );

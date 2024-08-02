@@ -9,7 +9,8 @@ class InputPasswordEntry extends StatefulWidget{
   final TextEditingController controller;
   String? errortext;
   String? Function(String? value)? validations;
-  InputPasswordEntry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations});
+  double? errorTextSize = 17;
+  InputPasswordEntry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations,this.errorTextSize = 17});
   @override
   State<InputPasswordEntry> createState() => _InputPasswordEntryState();
 }
@@ -127,7 +128,7 @@ class _InputPasswordEntryState extends State<InputPasswordEntry>{
                   errorStyle: TextStyle(
                     color: Colors.red,
                     fontFamily: 'impact',
-                    fontSize: 17.sp,
+                    fontSize: widget.errorTextSize?.sp,
                   ),
                   border: InputBorder.none,
                   hintText: widget.hinttext,
