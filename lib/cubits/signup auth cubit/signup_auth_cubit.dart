@@ -19,5 +19,9 @@ class SignupAuthCubit extends Cubit<AuthState>{
       }
     }
   }
+
+  void reset(){
+    emit(NullState());
+  }
 }
 

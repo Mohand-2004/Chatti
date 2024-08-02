@@ -25,7 +25,12 @@ class CoreController{
     return true;
   }
 
+  bool isValidEmail(){
+    return RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(emailSignController.text);
+  }
+
   bool matchPasswordsValidate() => passwordSignController.text == confirmpasswordController.text;
+
   String stronglevel(String password){
     List numbers = ['0','1','2','3','4','5','6','7','8','9'];
     List symbols = ['~','!','@','#',r'$','%','^','&','*','(',')','_','-','=','+','[',']','{','}','.','?','؟','<','>',',',';',':','÷','×',r'"',r"'"];
@@ -87,5 +92,8 @@ class CoreController{
       return "medium";
     }
   }
+
+  String get emailSign => emailSignController.text;
+  String get passwordSign => passwordSignController.text;
 }
 CoreController coreController = CoreController();

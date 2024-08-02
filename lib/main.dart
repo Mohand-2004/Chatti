@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/firebase_options.dart';
 import 'package:my_app/screens/login_screen.dart';
@@ -18,13 +19,13 @@ class MyApp extends StatelessWidget{
 }
 void main() async {
   // check orientation 
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations(
-  //   [
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitUp,
-  //   ]
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitUp,
+    ]
+  );
   //runApp(DevicePreview(builder:(context) => const MyApp(),));
   runApp(const MyApp());
   await Firebase.initializeApp(

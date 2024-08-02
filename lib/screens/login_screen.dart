@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_app/cubits/core_controller.dart';
+import 'package:my_app/cubits/signup%20auth%20cubit/signup_auth_cubit.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/screens/signup_screen.dart';
 import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
-// ignore: must_be_immutable
+
 class LoginScreen extends StatelessWidget{
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   LoginScreen({super.key});
   @override
   Widget build(BuildContext context){
@@ -152,10 +154,13 @@ class LoginScreen extends StatelessWidget{
                         context,
                         MaterialPageRoute(
                           builder: (context){
-                            return SignupScreen();
+                            return const SignupScreen();
                           }, 
                         )
                       );
+
+                      // reset cubit to avoid emit after cloasing exception 
+                      coreController.signupAuthCubit = SignupAuthCubit();
                     },
                     child: Text(
                       '\t\tSignUp',
