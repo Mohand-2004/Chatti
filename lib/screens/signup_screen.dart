@@ -129,7 +129,7 @@ class SignupScreen extends StatelessWidget {
                                           if (value == null || value == ''){
                                             return 'Email feild is required';
                                           }
-                                          else if (!coreController.isValidEmail()){
+                                          else if (!coreController.isValidEmail(value)){
                                             return 'Email is not valid';
                                           }
                                           return null;
@@ -202,7 +202,7 @@ class SignupScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               coreController.signUpValidationsKey.currentState!.validate();
-                              if (coreController.passwordSignValidate() && coreController.emailSignController.text != '' && coreController.matchPasswordsValidate() && coreController.isValidEmail()) {
+                              if (coreController.passwordSignValidate() && coreController.emailSignController.text != '' && coreController.matchPasswordsValidate() && coreController.isValidEmail(coreController.emailSignController.text)) {
                                 coreController.signUp();
                               }
                             },

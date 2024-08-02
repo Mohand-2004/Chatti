@@ -3,9 +3,12 @@ import 'package:my_app/cubits/signup%20auth%20cubit/signup_auth_cubit.dart';
 
 class CoreController{
   GlobalKey<FormState> signUpValidationsKey = GlobalKey();
+  GlobalKey<FormState> loginValidationsKey = GlobalKey();
   TextEditingController emailSignController = TextEditingController();
   TextEditingController passwordSignController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController emailLoginController = TextEditingController();
+  TextEditingController passwordLoginController = TextEditingController();
   SignupAuthCubit signupAuthCubit = SignupAuthCubit();
 
   void signUp(){
@@ -25,8 +28,8 @@ class CoreController{
     return true;
   }
 
-  bool isValidEmail(){
-    return RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(emailSignController.text);
+  bool isValidEmail(String s){
+    return RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(s);
   }
 
   bool matchPasswordsValidate() => passwordSignController.text == confirmpasswordController.text;

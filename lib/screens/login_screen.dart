@@ -8,9 +8,7 @@ import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
 
 class LoginScreen extends StatelessWidget{
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -65,35 +63,53 @@ class LoginScreen extends StatelessWidget{
                 padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 8.h),
                 height: 250.r,
                 width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    // top space
-                    SizedBox(height: 15.h,),
-        
-                    // user name feild
-                    Expanded(
-                      child: Entry(
-                        hinttext: 'user name',
-                        icon: Icons.person,
-                        controller: usernameController,
+                child: Form(
+                  key: coreController.loginValidationsKey,
+                  child: Column(
+                    children: [
+                      // top space
+                      SizedBox(height: 15.h,),
+                          
+                      // user name feild
+                      Expanded(
+                        child: Entry(
+                          validations: (string) {
+                            if(string == null || string == ''){
+                              return 'Email feild is required';
+                            }
+                            else if(!coreController.isValidEmail(string)){
+                              return 'Email is not valid';
+                            }
+                            return null;
+                          },
+                          hinttext: 'Email',
+                          icon: Icons.person,
+                          controller: coreController.emailLoginController,
+                        ),
                       ),
-                    ),
-        
-                    // space between
-                    SizedBox(height: 15.h,),
-        
-                    // password feild
-                    Expanded(
-                      child: InputPasswordEntry(
-                        hinttext: 'password',
-                        icon: Icons.lock,
-                        controller: passwordController,
+                          
+                      // space between
+                      SizedBox(height: 15.h,),
+                          
+                      // password feild
+                      Expanded(
+                        child: InputPasswordEntry(
+                          validations: (value) {
+                            if(value == null || value == ''){
+                              return 'password feild is required';
+                            }
+                            return null;
+                          },
+                          hinttext: 'password',
+                          icon: Icons.lock,
+                          controller: coreController.passwordLoginController,
+                        ),
                       ),
-                    ),
-        
-                    // bottom space
-                    SizedBox(height: 15.h,),
-                  ],
+                          
+                      // bottom space
+                      SizedBox(height: 15.h,),
+                    ],
+                  ),
                 ),
               ),
         
@@ -105,7 +121,12 @@ class LoginScreen extends StatelessWidget{
         
                   // login button
                   ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      coreController.loginValidationsKey.currentState!.validate();
+                      if(coreController.emailLoginController.text != '' && coreController.passwordLoginController.text != '' && coreController.isValidEmail(coreController.emailLoginController.text)){
+                        
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.orange,
                       fixedSize: Size(80.w+20,40.h),
