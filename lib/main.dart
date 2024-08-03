@@ -44,8 +44,8 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
   ]);
-  //runApp(DevicePreview(builder:(context) => const MyApp(),));
-  runApp(const MyApp());
+  runApp(DevicePreview(builder:(context) => const MyApp(),));
+  //runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

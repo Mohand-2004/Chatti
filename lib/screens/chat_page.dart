@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_app/cubits/core_controller.dart';
+import 'package:my_app/widgets/friend_chat_bubble.dart';
 import 'dart:io' show Platform;
 
 import 'package:my_app/widgets/massaging_text_feild.dart';
+import 'package:my_app/widgets/self_chat_bubble.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -81,13 +84,19 @@ class ChatPage extends StatelessWidget {
             // massages listVeiw
             Expanded(
               child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
                   itemBuilder:(context, index){
                   return Column(
                     children: [
-                      Container(
-                        color: Colors.amber,
-                        child: Text('$index'),
+                      index % 2 == 0 ? SelfChatBubble(
+                        radius: 20.r,
+                        massage: coreController.formteMassage('test massage $index'),
+                      ) : FriendChatBubble(
+                        radius: 20.r,
+                        massage: coreController.formteMassage('test massage $index'),
                       ),
+
+                      const SizedBox(height: 25,),
                     ],
                   );
                 },
