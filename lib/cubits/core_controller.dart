@@ -21,6 +21,10 @@ class CoreController{
     loginAuthCubit.login(emailLoginController.text,passwordLoginController.text);
   }
 
+  void logout(){
+    loginAuthCubit.logout();
+  }
+
   bool passwordSignValidate(){
     if(passwordSignController.text == ''){
       return false;

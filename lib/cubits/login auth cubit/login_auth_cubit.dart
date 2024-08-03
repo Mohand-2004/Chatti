@@ -15,5 +15,15 @@ class LoginAuthCubit extends Cubit<LoginState>{
       emit(WrongEmailOrPasswordState());
     }
   }
-  
+
+  void logout() async {
+    emit(LoginLoadingState());
+    try{
+      await FirebaseAuth.instance.signOut();
+      emit(LoginNullState());
+    }
+    on FirebaseAuthException{
+      emit(LoginNullState());
+    }
+  }
 }

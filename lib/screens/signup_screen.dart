@@ -240,7 +240,10 @@ class SignupScreen extends StatelessWidget {
                 if (state is SuccessState){
                   return Center(
                     child: SuccessAlert(
-                      automaticCommand: (){},
+                      automaticCommand: (){
+                        Navigator.pop(context);
+                        coreController.loginAuthCubit.login(coreController.emailSign,coreController.passwordSign);
+                      },
                       backCommand: (){
                         Navigator.pop(context);
                       },

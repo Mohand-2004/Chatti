@@ -8,6 +8,7 @@ import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/states.dart';
 import 'package:my_app/firebase_options.dart';
+import 'package:my_app/screens/home_page.dart';
 import 'package:my_app/screens/login_screen.dart';
 
 class MyApp extends StatelessWidget{
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget{
           home: BlocBuilder<LoginAuthCubit,LoginState>(
             builder: (context,state){
               if(state is LoginSuccessState){
-                return SizedBox();
+                return const HomePage();
               }
               else{
                 return const LoginScreen();

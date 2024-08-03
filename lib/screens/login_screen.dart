@@ -11,10 +11,10 @@ import 'package:my_app/widgets/adaptive_loading_indicator.dart';
 import 'package:my_app/widgets/entry.dart';
 import 'package:my_app/widgets/input_password_entry.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget{
   const LoginScreen({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       body: Stack(
         children: [
