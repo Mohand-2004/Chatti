@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
             // bodyv widget
             Container(
               alignment: Alignment.center,
-              color: Colors.cyan,
+              color: Colors.white,
               child: Text(
                 'Text',
                 style: TextStyle(
