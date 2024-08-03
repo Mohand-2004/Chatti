@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/states.dart';
 
 class LoginAuthCubit extends Cubit<LoginState>{
-  LoginAuthCubit() : super(LoginNullState());
+  LoginAuthCubit() : super(LoginSuccessState());
 
   void login(String email,String password) async {
     emit(LoginLoadingState());

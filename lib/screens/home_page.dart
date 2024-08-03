@@ -51,12 +51,12 @@ class _HomePageState extends State<HomePage> {
 
                     // chatti text
                     Padding(
-                      padding: const EdgeInsets.only(top: 35),
+                      padding: EdgeInsets.only(top: 25+5.h),
                       child: Text(
                         'Chatti',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 40.sp,
+                          fontSize: 40.r,
                           fontFamily: 'impact',
                         ),
                       ),
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
 
                     // logout button
                     Padding(
-                      padding: EdgeInsets.only(left: 2, bottom: 2, top: 40, right: 15.w),
+                      padding: EdgeInsets.only(left: 2, bottom: 2, top: 35, right: 15.w),
                       child: IconButton(
                         onPressed: () {
                           setState(() {

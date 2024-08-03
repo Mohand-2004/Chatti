@@ -11,7 +11,7 @@ class LogoutConfirmAlert extends StatelessWidget{
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 25.w),
       width: 300.dm,
-      height: 200.dm,
+      height: 240.r,
       padding: EdgeInsets.all(3.r),
       decoration: BoxDecoration(
         color: AppColors.hellBlue,
