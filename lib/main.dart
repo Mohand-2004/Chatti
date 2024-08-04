@@ -24,7 +24,9 @@ class MyApp extends StatelessWidget{
           home: BlocBuilder<LoginAuthCubit,LoginState>(
             builder: (context,state){
               if(state is LoginSuccessState){
-                return const ChatPage();
+                return HomePage(
+                  user: coreController.loginAuthCubit.currentUser!,
+                );
               }
               else{
                 return const LoginScreen();
@@ -44,9 +46,9 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
   ]);
-  runApp(DevicePreview(builder:(context) => const MyApp(),));
-  //runApp(const MyApp());
+  //runApp(DevicePreview(builder:(context) => const MyApp(),));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(const MyApp());
 }

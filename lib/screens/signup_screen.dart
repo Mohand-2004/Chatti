@@ -114,7 +114,7 @@ class SignupScreen extends StatelessWidget {
                               children: [
                                 // top space
                                 SizedBox(
-                                  height: 15.h,
+                                  height: 10.h,
                                 ),
               
                                 // user name feild
@@ -134,16 +134,35 @@ class SignupScreen extends StatelessWidget {
                                           return null;
                                         },
                                         hinttext: 'Email',
-                                        icon: Icons.person,
+                                        icon: Icons.email,
                                         controller: coreController.emailSignController,
                                       );
                                     },
                                   ),
                                 ),
+
+                                // space between
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+
+                                Expanded(
+                                  child: Entry(
+                                    validations: (value) {
+                                      if (value == null || value == ''){
+                                        return 'Name feild is required';
+                                      }
+                                      return null;
+                                    },
+                                    hinttext: 'name',
+                                    icon: Icons.person,
+                                    controller: coreController.nameSignController,
+                                  ),
+                                ),
               
                                 // space between
                                 SizedBox(
-                                  height: 15.h,
+                                  height: 10.h,
                                 ),
               
                                 // password feild
@@ -168,14 +187,14 @@ class SignupScreen extends StatelessWidget {
               
                                 // space between
                                 SizedBox(
-                                  height: 15.h,
+                                  height: 10.h,
                                 ),
               
                                 // confirm password feild
                                 Expanded(
                                   child: InputPasswordEntry(
                                     validations: (value) {
-                                      if (coreController.passwordSignValidate() && coreController.emailSignController.text != '' && !coreController.matchPasswordsValidate()){
+                                      if (coreController.passwordSignValidate() && coreController.emailSignController.text != '' && !coreController.matchPasswordsValidate() && coreController.nameSignController.text != ''){
                                         return "Passwords don't match";
                                       }
                                       return null;
@@ -188,7 +207,7 @@ class SignupScreen extends StatelessWidget {
               
                                 // bottom space
                                 SizedBox(
-                                  height: 15.h,
+                                  height: 10.h,
                                 ),
                               ],
                             ),

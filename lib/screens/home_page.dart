@@ -6,11 +6,13 @@ import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/states.dart';
 import 'package:my_app/models/app_colors.dart';
+import 'package:my_app/models/user.dart';
 import 'package:my_app/widgets/adaptive_loading_indicator.dart';
 import 'package:my_app/widgets/logout_confirm_alert.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget{
+  final AppUser user;
+  const HomePage({super.key,required this.user});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               color: Colors.white,
               child: Text(
-                'Text',
+                'email : ${widget.user.email}\nname : ${widget.user.name}\npassword ${widget.user.password}',
                 style: TextStyle(
                   fontSize: 30.sp,
                 ),

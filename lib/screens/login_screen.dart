@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget{
                                       return null;
                                     },
                                     hinttext: 'Email',
-                                    icon: Icons.person,
+                                    icon: Icons.email_rounded,
                                     controller: coreController.emailLoginController,
                                   ),
                                 ),

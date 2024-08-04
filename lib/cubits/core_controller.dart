@@ -6,15 +6,17 @@ class CoreController{
   GlobalKey<FormState> signUpValidationsKey = GlobalKey();
   GlobalKey<FormState> loginValidationsKey = GlobalKey();
   TextEditingController emailSignController = TextEditingController();
+  TextEditingController nameSignController = TextEditingController();
   TextEditingController passwordSignController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController emailLoginController = TextEditingController();
   TextEditingController passwordLoginController = TextEditingController();
   SignUpAuthCubit signUpAuthCubit = SignUpAuthCubit();
   LoginAuthCubit loginAuthCubit = LoginAuthCubit();
+  
 
   void signUp(){
-    signUpAuthCubit.signUp(emailSignController.text,passwordSignController.text);
+    signUpAuthCubit.signUp(emailSignController.text,passwordSignController.text,nameSignController.text);
   }
 
   void login(){

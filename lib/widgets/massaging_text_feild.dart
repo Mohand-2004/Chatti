@@ -66,6 +66,7 @@ class _MassagingTextFeildState extends State<MassagingTextFeild>{
               enableSubmit ? IconButton(
                 onPressed: (){
                   widget.submitCommand(controller.text);
+                  controller.text = '';
                 },
                 padding: const EdgeInsets.only(left: 5),
                 icon: Icon(
