@@ -236,7 +236,7 @@ class LoginScreen extends StatelessWidget{
                   color: AppColors.transprantHellBlue,
                   child: Center(
                     child: AdaptiveLoadingIndicator(
-                      androidWidth: 5.sp,
+                      androidWidth: 5.r,
                       androidSize: 60,
                       iOSsize: 25,
                       color: AppColors.orange,

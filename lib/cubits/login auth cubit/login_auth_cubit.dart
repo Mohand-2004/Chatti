@@ -8,7 +8,7 @@ class LoginAuthCubit extends Cubit<LoginState>{
   AppUser? currentUser;
   LoginAuthCubit() : super(LoginNullState());
 
-  Future<AppUser?> selectUserByEmail(String email) async {
+  Future<AppUser?> _selectUserByEmail(String email) async {
     var response = await fireUsers.get();
     for(var user in response.docs){
       if(user['email'] == email){
@@ -18,12 +18,24 @@ class LoginAuthCubit extends Cubit<LoginState>{
     return null;
   }
 
+  Future<List<AppUser>> _selectChatsByEmail(String email) async {
+    List<AppUser> friends = [];
+    var response = await fireChats.get();
+    for(var chat in response.docs){
+      if(chat['first_user_email'] == email || chat['second_user_email'] == email){
+        AppUser? tempUser = await _selectUserByEmail((chat['first_user_email'] != email ? chat['first_user_email'] : chat['second_user_email']));
+        friends.add(tempUser!);
+      }
+    }
+    return friends;
+  }
+
   void login(String email,String password) async {
     emit(LoginLoadingState());
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email,password: password);
-      currentUser = await selectUserByEmail(email);
-      emit(LoginSuccessState());
+      currentUser = await _selectUserByEmail(email);
+      emit(LoginSuccessState(await _selectChatsByEmail(email)));
     }
     on FirebaseAuthException{
       emit(WrongEmailOrPasswordState());

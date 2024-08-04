@@ -6,19 +6,30 @@ import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/states.dart';
 import 'package:my_app/models/app_colors.dart';
+import 'package:my_app/models/freind_chat.dart';
 import 'package:my_app/models/user.dart';
+import 'package:my_app/screens/chat_page.dart';
 import 'package:my_app/widgets/adaptive_loading_indicator.dart';
 import 'package:my_app/widgets/logout_confirm_alert.dart';
+import 'dart:io' show Platform;
 
 class HomePage extends StatefulWidget{
   final AppUser user;
-  const HomePage({super.key,required this.user});
+  final List<AppUser> firebaseFrirnds;
+  const HomePage({super.key,required this.user,required this.firebaseFrirnds});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>{
+  late List<AppUser> friends;
   bool showAlert = false;
+  @override
+  void initState() {
+    //friends = widget.firebaseFrirnds;
+    friends = [widget.user];
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: Size(
           MediaQuery.of(context).size.width,
-          MediaQuery.of(context).size.height * 0.09,
+          MediaQuery.of(context).size.height * 0.11,
         ),
         child: Container(
           color: Colors.white,
@@ -71,8 +82,8 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.only(left: 2, bottom: 2, top: 35, right: 15.w),
                       child: IconButton(
-                        onPressed: () {
-                          setState(() {
+                        onPressed: (){
+                          setState((){
                             showAlert = true;
                           });
                         },
@@ -90,28 +101,68 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              Divider(
+                endIndent: 25.w,
+                indent: 25.w,
+                thickness: 3.r,
+                color: Colors.grey,
+              ),
             ],
           ),
         ),
       ),
       body: GestureDetector(
-        onTap: () {
-          setState(() {
+        onTap: (){
+          setState((){
             showAlert = false;
           });
         },
         child: Stack(
           children: [
-            // bodyv widget
+            // body widget
             Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               alignment: Alignment.center,
               color: Colors.white,
-              child: Text(
-                'email : ${widget.user.email}\nname : ${widget.user.name}\npassword ${widget.user.password}',
-                style: TextStyle(
-                  fontSize: 30.sp,
+              child: friends.isEmpty ? Center(
+                child: Text(
+                  'No Chats',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.sp,
+                  ),
                 ),
-              ),
+              ) : ListView.builder(
+                itemBuilder: (context,index){
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:(context){
+                                return ChatPage(
+                                  sender: widget.user,
+                                  receiver: friends[index],
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: FreindChat(
+                          height: 100.h,
+                          user: widget.user,
+                        ),
+                      ),
+                      const SizedBox(height: 5,)
+                    ],
+                  );
+                },
+                itemCount: friends.length,
+               ),
             ),
         
             // logout confirm alert
@@ -122,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                     coreController.logout();
                   },
                   noCommand: (){
-                    setState(() {
+                    setState((){
                       showAlert = false;
                     });
                   },
@@ -135,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                     color: AppColors.transprantHellBlue,
                     child: Center(
                       child: AdaptiveLoadingIndicator(
-                        androidWidth: 5.sp,
+                        androidWidth: 5.r,
                         androidSize: 60,
                         iOSsize: 25,
                         color: AppColors.orange,
@@ -149,6 +200,24 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ],
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: (Platform.isIOS ? 15.h : 10.h)),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.r),
+          child: IconButton(
+            onPressed: (){},
+            icon: const Icon(Icons.add_comment),
+            iconSize: 32.r,
+            padding: const EdgeInsets.only(top: 3),
+            style: ElevatedButton.styleFrom(
+              shape: const BeveledRectangleBorder(),
+              backgroundColor: AppColors.orange,
+              fixedSize: Size(58.r,58.r),
+              iconColor: Colors.white,
+            ),
+          ),
         ),
       ),
     );

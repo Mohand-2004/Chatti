@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget{
               if(state is LoginSuccessState){
                 return HomePage(
                   user: coreController.loginAuthCubit.currentUser!,
+                  firebaseFrirnds: state.chats,
                 );
               }
               else{
@@ -46,9 +47,9 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
   ]);
-  //runApp(DevicePreview(builder:(context) => const MyApp(),));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(DevicePreview(builder:(context) => const MyApp(),));
+  //runApp(const MyApp());
 }

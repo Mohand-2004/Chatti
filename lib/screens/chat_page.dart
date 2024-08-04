@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/cubits/core_controller.dart';
+import 'package:my_app/models/user.dart';
 import 'package:my_app/widgets/friend_chat_bubble.dart';
-import 'dart:io' show Platform;
-
 import 'package:my_app/widgets/massaging_text_feild.dart';
 import 'package:my_app/widgets/self_chat_bubble.dart';
+import 'dart:io' show Platform;
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+class ChatPage extends StatelessWidget{
+  final AppUser sender;
+  final AppUser receiver;
+  const ChatPage({super.key,required this.receiver,required this.sender});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(
           MediaQuery.of(context).size.width,
-          MediaQuery.of(context).size.height * 0.09,
+          MediaQuery.of(context).size.height * 0.11,
         ),
         child: Container(
           color: Colors.white,
@@ -72,6 +74,12 @@ class ChatPage extends StatelessWidget {
                     const Spacer(),
                   ],
                 ),
+              ),
+              Divider(
+                endIndent: 20.w,
+                indent: 20.w,
+                thickness: 3.r,
+                color: Colors.grey,
               ),
             ],
           ),

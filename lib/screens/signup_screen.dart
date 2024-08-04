@@ -64,8 +64,8 @@ class SignupScreen extends StatelessWidget {
                       children: [
                         // chat image
                         Image(
-                          width: 200.r,
-                          height: 200.r,
+                          width: 160.r, // 200
+                          height: 160.r, // 200
                           image: const AssetImage('assets/images/app icon.png'),
                         ),
               
@@ -106,7 +106,7 @@ class SignupScreen extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 10.w),
                           padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 8.h),
-                          height: 290.h,
+                          height: 350.h, // 290
                           width: MediaQuery.of(context).size.width,
                           child: Form(
                             key: coreController.signUpValidationsKey,
