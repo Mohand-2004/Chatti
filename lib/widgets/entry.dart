@@ -10,7 +10,8 @@ class Entry extends StatefulWidget{
   String? errortext;
   double? errorTextSize;
   String? Function(String? string)? validations;
-  Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations,this.errorTextSize = 17});
+  final double iconDivederSpace;
+  Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations,this.errorTextSize = 17,this.iconDivederSpace = 0});
   @override
   State<Entry> createState() => _EntryState();
 }
@@ -47,6 +48,9 @@ class _EntryState extends State<Entry>{
                 ),
               ),
             ),
+
+            // space between
+            SizedBox(width: widget.iconDivederSpace.w,),
 
             // verticl divider
             SizedBox(

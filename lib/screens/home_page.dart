@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:my_app/cubits/auth%20cubit/states.dart';
+import 'package:my_app/cubits/add%20chat%20cubit/add_chat_cubit.dart';
+import 'package:my_app/cubits/add%20chat%20cubit/states.dart';
 import 'package:my_app/cubits/core_controller.dart';
-import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
-import 'package:my_app/cubits/login%20auth%20cubit/states.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/models/freind_chat.dart';
 import 'package:my_app/models/user.dart';
 import 'package:my_app/screens/chat_page.dart';
 import 'package:my_app/widgets/adaptive_loading_indicator.dart';
+import 'package:my_app/widgets/add_friend_alert.dart';
 import 'package:my_app/widgets/logout_confirm_alert.dart';
 import 'dart:io' show Platform;
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   final AppUser user;
   final List<AppUser> firebaseFrirnds;
-  const HomePage({super.key,required this.user,required this.firebaseFrirnds});
+  const HomePage(
+      {super.key, required this.user, required this.firebaseFrirnds});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> {
   late List<AppUser> friends;
   bool showAlert = false;
+  bool isLogoutAlert = false;
   @override
   void initState() {
-    //friends = widget.firebaseFrirnds;
-    friends = [widget.user];
+    friends = widget.firebaseFrirnds;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage>{
 
                     // chatti text
                     Padding(
-                      padding: EdgeInsets.only(top: 25+5.h),
+                      padding: EdgeInsets.only(top: 25 + 5.h),
                       child: Text(
                         'Chatti',
                         style: TextStyle(
@@ -80,11 +82,13 @@ class _HomePageState extends State<HomePage>{
 
                     // logout button
                     Padding(
-                      padding: EdgeInsets.only(left: 2, bottom: 2, top: 35, right: 15.w),
+                      padding: EdgeInsets.only(
+                          left: 2, bottom: 2, top: 35, right: 15.w),
                       child: IconButton(
-                        onPressed: (){
-                          setState((){
+                        onPressed: () {
+                          setState(() {
                             showAlert = true;
+                            isLogoutAlert = true;
                           });
                         },
                         icon: const Icon(Icons.logout_outlined),
@@ -92,7 +96,8 @@ class _HomePageState extends State<HomePage>{
                         color: Colors.grey,
                         padding: const EdgeInsets.only(left: 5.5, bottom: 0.5),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 237, 237, 237),
+                          backgroundColor:
+                              const Color.fromARGB(255, 237, 237, 237),
                           shape: const CircleBorder(),
                           fixedSize: Size(40.r, 40.r),
                         ),
@@ -117,89 +122,114 @@ class _HomePageState extends State<HomePage>{
             showAlert = false;
           });
         },
-        child: Stack(
-          children: [
-            // body widget
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              alignment: Alignment.center,
-              color: Colors.white,
-              child: friends.isEmpty ? Center(
-                child: Text(
-                  'No Chats',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.sp,
+        child: BlocProvider(
+          create: (context) => coreController.chatCubit,
+          child: Stack(
+            children: [
+              // body widget
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: friends.isEmpty ? Center(
+                  child: Text(
+                    'No Chats',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.sp,
+                    ),
                   ),
-                ),
-              ) : ListView.builder(
-                itemBuilder: (context,index){
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:(context){
-                                return ChatPage(
-                                  sender: widget.user,
-                                  receiver: friends[index],
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        child: FreindChat(
-                          height: 100.h,
-                          user: widget.user,
+                )
+                : ListView.builder(
+                  itemBuilder: (context, index){
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ChatPage(
+                                    sender: widget.user,
+                                    receiver: friends[index],
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: FreindChat(
+                            height: 100.h,
+                            user: friends[index],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 5,)
-                    ],
-                  );
-                },
-                itemCount: friends.length,
-               ),
-            ),
-        
-            // logout confirm alert
-            showAlert ? SizedBox(
-              child: Center(
-                child: LogoutConfirmAlert(
-                  yesCommand: (){
-                    coreController.logout();
+                        const SizedBox(
+                          height: 5,
+                        )
+                      ],
+                    );
                   },
-                  noCommand: (){
-                    setState((){
-                      showAlert = false;
-                    });
-                  },
+                  itemCount: friends.length,
                 ),
               ),
-            ) : BlocBuilder<LoginAuthCubit,LoginState>(
-              builder: (context, state){
-                if (state is LoadingState){
-                  return Container(
-                    color: AppColors.transprantHellBlue,
-                    child: Center(
-                      child: AdaptiveLoadingIndicator(
-                        androidWidth: 5.r,
-                        androidSize: 60,
-                        iOSsize: 25,
-                        color: AppColors.orange,
-                      ),
+
+              // logout confirm alert
+              showAlert? SizedBox(
+                  child: isLogoutAlert ? Center(
+                    child: LogoutConfirmAlert(
+                      yesCommand: () {
+                        coreController.logout();
+                      },
+                      noCommand: (){
+                        setState((){
+                          showAlert = false;
+                        });
+                      },
                     ),
-                  );
-                }
-                else{
-                  return const SizedBox();
-                }
-              },
-            ),
-          ],
+                  )
+                  : Center(
+                    child: AddFriendAlert(
+                      currentUserEmail: widget.user.email,
+                      saveCommand: (String freindEmail) async {
+                        AppUser? newFriend = await coreController.chatCubit.getUserByEmail(freindEmail);
+                        if (newFriend != null){
+                          friends.add(newFriend);
+                          coreController.addChatToFireBase(widget.user.email, newFriend.email);
+                          setState((){
+                            showAlert = false;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+
+              // loading indicator
+              BlocBuilder<AddChatCubit,AddChatState>(
+                builder: (context, state){
+                  if (state is AddChatLoadingState){
+                    return Container(
+                      color: AppColors.transprantHellBlue,
+                      child: Center(
+                        child: AdaptiveLoadingIndicator(
+                          androidWidth: 5.r,
+                          androidSize: 60,
+                          iOSsize: 25,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                    );
+                  }
+                  else{
+                    return const SizedBox();
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Padding(
@@ -207,14 +237,19 @@ class _HomePageState extends State<HomePage>{
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15.r),
           child: IconButton(
-            onPressed: (){},
+            onPressed: (){
+              setState((){
+                showAlert = true;
+                isLogoutAlert = false;
+              });
+            },
             icon: const Icon(Icons.add_comment),
             iconSize: 32.r,
             padding: const EdgeInsets.only(top: 3),
             style: ElevatedButton.styleFrom(
               shape: const BeveledRectangleBorder(),
               backgroundColor: AppColors.orange,
-              fixedSize: Size(58.r,58.r),
+              fixedSize: Size(58.r, 58.r),
               iconColor: Colors.white,
             ),
           ),

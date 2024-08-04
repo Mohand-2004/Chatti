@@ -115,10 +115,8 @@ class LoginScreen extends StatelessWidget{
                                 // password feild
                                 Expanded(
                                   child: InputPasswordEntry(
-                                    errorTextSize:
-                                        (state is WrongEmailOrPasswordState ? 15 : 17),
-                                    errortext:
-                                        (state is WrongEmailOrPasswordState ? state.text : null),
+                                    errorTextSize: (state is WrongEmailOrPasswordState ? 15 : 17),
+                                    errortext: (state is WrongEmailOrPasswordState ? state.text : null),
                                     validations: (value) {
                                       if (value == null || value == '') {
                                         return 'password feild is required';

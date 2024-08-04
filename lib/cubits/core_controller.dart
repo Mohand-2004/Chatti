@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/cubits/add%20chat%20cubit/add_chat_cubit.dart';
 import 'package:my_app/cubits/auth%20cubit/signup_auth_cubit.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
+import 'package:my_app/models/firebase_collections.dart';
 
 class CoreController{
   GlobalKey<FormState> signUpValidationsKey = GlobalKey();
@@ -13,7 +15,16 @@ class CoreController{
   TextEditingController passwordLoginController = TextEditingController();
   SignUpAuthCubit signUpAuthCubit = SignUpAuthCubit();
   LoginAuthCubit loginAuthCubit = LoginAuthCubit();
-  
+  AddChatCubit chatCubit = AddChatCubit();
+
+  void addChatToFireBase(String firstEmail,String secondEmail){
+    fireChats.add(
+      {
+        "first_user_email" : firstEmail,
+        "second_user_email" : secondEmail,
+      }
+    );
+  }
 
   void signUp(){
     signUpAuthCubit.signUp(emailSignController.text,passwordSignController.text,nameSignController.text);
