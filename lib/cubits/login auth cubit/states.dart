@@ -1,11 +1,11 @@
-import 'package:my_app/models/user.dart';
+import 'package:my_app/models/chat.dart';
 
 abstract class LoginState{
   String? text;
 }
 class LoginNullState extends LoginState{}
 class LoginSuccessState extends LoginState{
-  List<AppUser> chats;
+  List<Chat> chats;
   LoginSuccessState(this.chats);
 }
 class WrongEmailOrPasswordState extends LoginState{

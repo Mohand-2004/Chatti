@@ -5,6 +5,8 @@ import 'package:my_app/cubits/add%20chat%20cubit/add_chat_cubit.dart';
 import 'package:my_app/cubits/add%20chat%20cubit/states.dart';
 import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/models/app_colors.dart';
+import 'package:my_app/models/chat.dart';
+import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/freind_chat.dart';
 import 'package:my_app/models/user.dart';
 import 'package:my_app/screens/chat_page.dart';
@@ -15,22 +17,15 @@ import 'dart:io' show Platform;
 
 class HomePage extends StatefulWidget {
   final AppUser user;
-  final List<AppUser> firebaseFrirnds;
-  const HomePage(
-      {super.key, required this.user, required this.firebaseFrirnds});
+  final List<Chat> firebaseFrirnds;
+  const HomePage({super.key, required this.user, required this.firebaseFrirnds});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<AppUser> friends;
   bool showAlert = false;
   bool isLogoutAlert = false;
-  @override
-  void initState() {
-    friends = widget.firebaseFrirnds;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +91,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.grey,
                         padding: const EdgeInsets.only(left: 5.5, bottom: 0.5),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 237, 237, 237),
+                          backgroundColor:const Color.fromARGB(255, 237, 237, 237),
                           shape: const CircleBorder(),
                           fixedSize: Size(40.r, 40.r),
                         ),
@@ -117,8 +111,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: GestureDetector(
-        onTap: (){
-          setState((){
+        onTap: () {
+          setState(() {
             showAlert = false;
           });
         },
@@ -127,90 +121,95 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: [
               // body widget
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                alignment: Alignment.center,
-                color: Colors.white,
-                child: friends.isEmpty ? Center(
-                  child: Text(
-                    'No Chats',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                )
-                : ListView.builder(
-                  itemBuilder: (context, index){
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ChatPage(
-                                    sender: widget.user,
-                                    receiver: friends[index],
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                          child: FreindChat(
-                            height: 100.h,
-                            user: friends[index],
-                          ),
+              BlocBuilder<AddChatCubit,AddChatState>(
+                builder: (context, state) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    alignment: Alignment.center,
+                    color: Colors.white,
+                    child: (state is ChatsRefreshState ? state.newChats.isEmpty : widget.firebaseFrirnds.isEmpty) ? Center(
+                      child: Text(
+                        'No Chats',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
                         ),
-                        const SizedBox(
-                          height: 5,
-                        )
-                      ],
-                    );
-                  },
-                  itemCount: friends.length,
-                ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemBuilder: (context,index){
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context){
+                                      return ChatPage(
+                                        sender: widget.user,
+                                        receiver: (state is ChatsRefreshState ? state.newChats[index].user : widget.firebaseFrirnds[index].user),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                              child: FreindChat(
+                                height: 100.h,
+                                chat: (state is ChatsRefreshState ? state.newChats[index] : widget.firebaseFrirnds[index]),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            )
+                          ],
+                        );
+                      },
+                      itemCount: (state is ChatsRefreshState ? state.newChats.length : widget.firebaseFrirnds.length),
+                    ),
+                  );
+                },
               ),
 
               // logout confirm alert
-              showAlert? SizedBox(
-                  child: isLogoutAlert ? Center(
-                    child: LogoutConfirmAlert(
-                      yesCommand: () {
-                        coreController.logout();
-                      },
-                      noCommand: (){
-                        setState((){
-                          showAlert = false;
-                        });
-                      },
-                    ),
-                  )
-                  : Center(
-                    child: AddFriendAlert(
-                      currentUserEmail: widget.user.email,
-                      saveCommand: (String freindEmail) async {
-                        AppUser? newFriend = await coreController.chatCubit.getUserByEmail(freindEmail);
-                        if (newFriend != null){
-                          friends.add(newFriend);
-                          coreController.addChatToFireBase(widget.user.email, newFriend.email);
+              showAlert ? SizedBox(
+                child: isLogoutAlert
+                  ? Center(
+                      child: LogoutConfirmAlert(
+                        yesCommand: () {
+                          coreController.chatCubit = AddChatCubit();
+                          coreController.logout();
+                        },
+                        noCommand: (){
                           setState((){
                             showAlert = false;
                           });
-                        }
-                      },
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: AddFriendAlert(
+                        currentUserEmail: widget.user.email,
+                        saveCommand: (String freindEmail) async {
+                          AppUser? newFriend = await coreController.chatCubit.getUserByEmail(freindEmail);
+                          if (newFriend != null) {
+                            coreController.addChatToFireBase(widget.user.email,newFriend.email);
+                            setState(() {
+                              showAlert = false;
+                            });
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                )
-              : const SizedBox(),
+                  )
+                : const SizedBox(),
 
               // loading indicator
-              BlocBuilder<AddChatCubit,AddChatState>(
-                builder: (context, state){
-                  if (state is AddChatLoadingState){
+              BlocBuilder<AddChatCubit, AddChatState>(
+                builder: (context, state) {
+                  if (state is AddChatLoadingState) {
                     return Container(
                       color: AppColors.transprantHellBlue,
                       child: Center(
@@ -228,6 +227,21 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
               ),
+
+              // streambuilder to listen to dataBase 
+              // and trigger cubit
+              StreamBuilder(
+                stream: fireChats.snapshots(),
+                builder: (context, snapshot){
+                  if (snapshot.hasData){
+                    coreController.chatCubit.refreshChats(widget.user.email);
+                    return const SizedBox();
+                  }
+                  else{
+                    return const SizedBox();
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -237,8 +251,8 @@ class _HomePageState extends State<HomePage> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15.r),
           child: IconButton(
-            onPressed: (){
-              setState((){
+            onPressed: () {
+              setState(() {
                 showAlert = true;
                 isLogoutAlert = false;
               });

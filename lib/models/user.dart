@@ -4,19 +4,23 @@ class AppUser{
   late final String _email;
   late final String _password;
   late final String _name;
-  AppUser({required String name,required String email,required String password}){
+  late final String _docId;
+  AppUser({required String name,required String email,required String password,required docId}){
     _email = email;
     _password = password;
     _name = name;
+    _docId = docId;
   }
-  factory AppUser.fromFirebaseJson(QueryDocumentSnapshot json){
+  factory AppUser.fromFirebaseJson(QueryDocumentSnapshot json,String docId){
     return AppUser(
       name: json['name'],
       email: json['email'],
       password: json['password'],
+      docId: docId,
     );
   }
   String get email => _email;
   String get password => _password;
   String get name => _name;
+  String get docId => _docId;
 }

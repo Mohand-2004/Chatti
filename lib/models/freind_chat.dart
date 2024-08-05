@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_app/models/app_colors.dart';
-import 'package:my_app/models/user.dart';
+import 'package:my_app/models/chat.dart';
+import 'package:my_app/models/firebase_collections.dart';
 
 class FreindChat extends StatelessWidget{
-  final AppUser user;
+  final Chat chat;
   final double width;
   final double height;
   final double imageBorderWidth;
   final double imageRadius;
-  const FreindChat({super.key,required this.user,this.height = 120,this.width = double.infinity,this.imageBorderWidth = 2,this.imageRadius = 32});
+  const FreindChat({super.key,required this.chat,this.height = 120,this.width = double.infinity,this.imageBorderWidth = 2,this.imageRadius = 32});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,12 +40,25 @@ class FreindChat extends StatelessWidget{
               SizedBox(width: 10.w,),
           
               Text(
-                user.name,
+                chat.user.name,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25.r,
                 ),
-              )
+              ),
+
+              const Spacer(),
+              IconButton(
+                onPressed: (){
+                  fireChats.doc(chat.docId).delete();
+                },
+                icon: Icon(
+                  Icons.delete_outlined,
+                  size: 28.r,
+                  color: Colors.red,
+                ),
+              ),
+              SizedBox(width: 25.w,)
             ],
           ),
           SizedBox(height: 5.h,),
