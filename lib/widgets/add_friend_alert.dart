@@ -71,8 +71,8 @@ class _AddFriendAlertState extends State<AddFriendAlert>{
                     child: BlocBuilder<AddChatCubit,AddChatState>(
                       builder: (context, state){
                         return Entry(
-                          errortext: (state is NoUserState ? "There is no user has this email" : errortext),
-                          errorTextSize: (state is NoUserState ? 12 : errorTextSize),
+                          errortext: (state is NoUserState ? "There is no user has this email" : (state is ExistChatState?  "There is already a chat with this user" : errortext)),
+                          errorTextSize: (state is NoUserState ? 12 : (state is ExistChatState ? 10 : errorTextSize)),
                           iconDivederSpace: 15,
                           hinttext: 'Email',
                           icon: Icons.email,

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/cubits/add%20chat%20cubit/states.dart';
+import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/models/chat.dart';
 import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/user.dart';
@@ -37,6 +38,15 @@ class AddChatCubit extends Cubit<AddChatState>{
       return null;
     }
     else{
+      var response = await fireChats.get();
+      for(var chat in response.docs){
+        if(
+          (chat['first_user_email'] == user.email && chat['second_user_email'] == coreController.loginAuthCubit.currentUser!.email)||
+          (chat['second_user_email'] == user.email && chat['first_user_email'] == coreController.loginAuthCubit.currentUser!.email)){
+          emit(ExistChatState());
+          return null;
+        }
+      }
       emit(AddChatNullState());
       return user;
     }

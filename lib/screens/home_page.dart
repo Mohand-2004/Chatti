@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                           AppUser? newFriend = await coreController.chatCubit.getUserByEmail(freindEmail);
                           if (newFriend != null) {
                             coreController.addChatToFireBase(widget.user.email,newFriend.email);
-                            setState(() {
+                            setState((){
                               showAlert = false;
                             });
                           }
