@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/models/chat.dart';
 import 'package:my_app/models/firebase_collections.dart';
@@ -50,6 +51,7 @@ class FreindChat extends StatelessWidget{
               const Spacer(),
               IconButton(
                 onPressed: (){
+                  coreController.deleteChatMassages(chat);
                   fireChats.doc(chat.docId).delete();
                 },
                 icon: Icon(

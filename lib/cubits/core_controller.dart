@@ -4,6 +4,7 @@ import 'package:my_app/cubits/add%20chat%20cubit/add_chat_cubit.dart';
 import 'package:my_app/cubits/auth%20cubit/signup_auth_cubit.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
 import 'package:my_app/cubits/massages%20cubit/massages_cubit.dart';
+import 'package:my_app/models/chat.dart';
 import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/massage.dart';
 
@@ -98,7 +99,14 @@ class CoreController{
     }
     return newMassage;
   }
-
+  void deleteChatMassages(Chat chat) async {
+    var response = await fireMassages.get();
+    for(var massage in response.docs){
+      if((massage['sender_email'] == chat.user.email || massage['receiver_email'] == coreController.loginAuthCubit.currentUser!.email) || (massage['receiver_email'] == chat.user.email || massage['sender_email'] == coreController.loginAuthCubit.currentUser!.email)){
+        fireMassages.doc(massage.id).delete();
+      }
+    }
+  }
   String stronglevel(String password){
     List numbers = ['0','1','2','3','4','5','6','7','8','9'];
     List symbols = ['~','!','@','#',r'$','%','^','&','*','(',')','_','-','=','+','[',']','{','}','.','?','؟','<','>',',',';',':','÷','×',r'"',r"'"];
