@@ -9,7 +9,7 @@ class MassagesCubit extends Cubit<MassageState>{
     var response = await fireMassages.get();
     List<Massage> massages = [];
     for(var massage in response.docs){
-      if((massage['sender_email'] == senderEmail || massage['receiver_email'] == receiverEmail) || (massage['receiver_email'] == senderEmail || massage['sender_email'] == receiverEmail)){
+      if((massage['sender_email'] == senderEmail && massage['receiver_email'] == receiverEmail) || (massage['receiver_email'] == senderEmail && massage['sender_email'] == receiverEmail)){
         massages.add(Massage.fromJson(massage,massage.id));
       }
     }

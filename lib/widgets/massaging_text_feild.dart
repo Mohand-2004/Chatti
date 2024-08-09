@@ -59,6 +59,9 @@ class _MassagingTextFeildState extends State<MassagingTextFeild>{
                       });
                     }
                   },
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                  ),
                   onTapOutside: (event){
                     // pop the keyboard when foucus outside
                     // as in iOS the keboard won't pop automaticly

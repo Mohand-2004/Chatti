@@ -31,7 +31,7 @@ class FriendChatBubble extends StatelessWidget with ChatBubble{
                 coreController.formteMassage(massage.content),
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 12.r,
+                  fontSize: 16.r,
                 ),
               ),
               Text(

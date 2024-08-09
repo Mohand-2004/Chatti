@@ -102,7 +102,7 @@ class CoreController{
   void deleteChatMassages(Chat chat) async {
     var response = await fireMassages.get();
     for(var massage in response.docs){
-      if((massage['sender_email'] == chat.user.email || massage['receiver_email'] == coreController.loginAuthCubit.currentUser!.email) || (massage['receiver_email'] == chat.user.email || massage['sender_email'] == coreController.loginAuthCubit.currentUser!.email)){
+      if((massage['sender_email'] == chat.user.email && massage['receiver_email'] == coreController.loginAuthCubit.currentUser!.email) || (massage['receiver_email'] == chat.user.email && massage['sender_email'] == coreController.loginAuthCubit.currentUser!.email)){
         fireMassages.doc(massage.id).delete();
       }
     }
