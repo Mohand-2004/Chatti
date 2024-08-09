@@ -59,6 +59,11 @@ class _MassagingTextFeildState extends State<MassagingTextFeild>{
                       });
                     }
                   },
+                  onTapOutside: (event){
+                    // pop the keyboard when foucus outside
+                    // as in iOS the keboard won't pop automaticly
+                    FocusManager.instance.primaryFocus!.unfocus();
+                  },
                 ),
               ),
           
@@ -67,6 +72,9 @@ class _MassagingTextFeildState extends State<MassagingTextFeild>{
                 onPressed: (){
                   widget.submitCommand(controller.text);
                   controller.text = '';
+                  setState((){
+                    enableSubmit = false;
+                  });
                 },
                 padding: const EdgeInsets.only(left: 5),
                 icon: Icon(

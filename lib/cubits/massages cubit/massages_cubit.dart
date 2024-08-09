@@ -18,7 +18,7 @@ class MassagesCubit extends Cubit<MassageState>{
       return ;
     }
     massages.sort((Massage m1,Massage m2){
-      if(m1.date == m2.date){
+      if(m1.date.isEqual(m2.date)){
         return m1.time < m2.time ? -1 : 1;
       }
       else{
