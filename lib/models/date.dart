@@ -142,8 +142,17 @@ class Date{
   bool operator <= (Date date){
     return (this < date || isEqual(date));
   }
+  static Date _current(){
+    DateTime nowDateTime = DateTime.now();
+    return Date(
+      day: nowDateTime.day,
+      month: nowDateTime.month,
+      year: nowDateTime.year,
+    );
+  }
   int get year => _year;
   int get day => _day;
   int get month => _month;
   int get yearsDays => _yearsDays;
+  static Date get current => _current();
 }

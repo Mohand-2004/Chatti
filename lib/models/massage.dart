@@ -16,14 +16,14 @@ class Massage{
     _senderEmail = senderEmail;
     _receiverEmail = receiverEmail;
   }
-  factory Massage.fromJson(Map<String,dynamic> json,String id){
+  factory Massage.fromJson(var json,String id){
     return Massage(
       content: json['content'],
-      senderEmail: json['senderEmail'],
-      receiverEmail: json['receiverEmail'],
+      senderEmail: json['sender_email'],
+      receiverEmail: json['receiver_email'],
       docId: id,
       date: Date(day: json['day'], month: json['month'], year: json['year']),
-      time: Time(seconds: json['seconds'], minutes: json['minutes'], hours: json['hours']),
+      time: Time(seconds: json['seconds'], minutes: json['minutes'], hours: json['hours'],hour24Mode: true),
     );
   }
   String get id => _docId;

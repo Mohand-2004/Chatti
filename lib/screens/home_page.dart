@@ -7,7 +7,7 @@ import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/models/app_colors.dart';
 import 'package:my_app/models/chat.dart';
 import 'package:my_app/models/firebase_collections.dart';
-import 'package:my_app/models/freind_chat.dart';
+import 'package:my_app/widgets/freind_chat.dart';
 import 'package:my_app/models/user.dart';
 import 'package:my_app/screens/chat_page.dart';
 import 'package:my_app/widgets/adaptive_loading_indicator.dart';

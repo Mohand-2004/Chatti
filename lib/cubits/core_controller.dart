@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:my_app/cubits/add%20chat%20cubit/add_chat_cubit.dart';
 import 'package:my_app/cubits/auth%20cubit/signup_auth_cubit.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/login_auth_cubit.dart';
+import 'package:my_app/cubits/massages%20cubit/massages_cubit.dart';
 import 'package:my_app/models/firebase_collections.dart';
+import 'package:my_app/models/massage.dart';
 
 class CoreController{
   GlobalKey<FormState> signUpValidationsKey = GlobalKey();
@@ -16,12 +19,30 @@ class CoreController{
   SignUpAuthCubit signUpAuthCubit = SignUpAuthCubit();
   LoginAuthCubit loginAuthCubit = LoginAuthCubit();
   AddChatCubit chatCubit = AddChatCubit();
+  MassagesCubit massageCubit = MassagesCubit();
+  MediaQueryData? mediaQuery;
 
   void addChatToFireBase(String firstEmail,String secondEmail){
     fireChats.add(
       {
         "first_user_email" : firstEmail,
         "second_user_email" : secondEmail,
+      }
+    );
+  }
+
+  void addMassageToFireBase(Massage massage){
+    fireMassages.add(
+      {
+        "content" : massage.content,
+        "day" : massage.date.day,
+        "hours" : massage.time.hours,
+        "minutes" : massage.time.minutes,
+        "month" : massage.date.month,
+        "receiver_email" : massage.receiverEmail,
+        "seconds" : massage.time.seconds,
+        "sender_email" : massage.senderEmail,
+        "year" : massage.date.year,
       }
     );
   }

@@ -1,3 +1,5 @@
+import 'package:my_app/models/date.dart';
+
 enum Mode{
   am,
   pm,
@@ -53,7 +55,7 @@ class Time{
   }
   @override
   String toString(){
-    return "$_hours:$_minutes:$_seconds ${_hour24Mode ? '' : _mode.name}";
+    return "$_hours:$_minutes ${_hour24Mode ? '' : _mode.name}";
   }
   void _incrementHours([int hours = 1]){
     _hours += hours;
@@ -296,9 +298,61 @@ class Time{
   bool operator <= (Time time){
     return this < time || isEqual(time);
   }
+  void to24Mode(){
+    if(_hours != 12){
+      if(!_hour24Mode){
+        _hour24Mode = true;
+        if(_mode == Mode.pm){
+          _hours += 12;
+        }
+      }
+    }
+    else{
+      if(!_hour24Mode){
+        _hour24Mode = true;
+        if(mode == Mode.am){
+          _hours = 0;
+        }
+      }
+    }
+  }
+  Time to12Mode(){
+    if(_hour24Mode){
+      if(_hours == 0){
+        _hours = 12;
+        _mode = Mode.am;
+      }
+      else{
+          _hour24Mode = false;
+          if(_hours > 12){
+            _hours -= 12;
+            _mode = Mode.pm;
+          }
+          else{
+            _mode = Mode.am;
+          }
+      }
+    }
+    return this;
+  }
+  // static Mode _timeMode(){
+  //   String now = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  //   String mode = now.substring(now.indexOf(' ')+1);
+  //   return mode == 'PM' ? Mode.pm : Mode.am;
+  // }
+  static Time _current(){
+    DateTime now = DateTime.now();
+    return Time(
+      seconds: now.second,
+      minutes: now.minute,
+      hours: now.hour,
+      hour24Mode: true,
+    );
+  }
   int get seconds => _seconds;
   int get minutes => _minutes;
   int get hours => _hours;
   Mode get mode => _mode;
   bool get is24 => _hour24Mode;
+  static Time get current => _current();
 }
