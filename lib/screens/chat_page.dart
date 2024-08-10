@@ -149,7 +149,10 @@ class ChatPage extends StatelessWidget {
                         );
                       }
                       else{
-                        return const Expanded(child: SizedBox());
+                        // don't return an empty sizedbox
+                        // it must contain a listveiw to avoid
+                        // scrollcontroller not a attached to a scrollveiw
+                        return Expanded(child: SizedBox(child: ListView(controller: coreController.chatsListVeiwController,shrinkWrap: true,),));
                       }
                     },
                   ),
@@ -197,17 +200,17 @@ class ChatPage extends StatelessWidget {
             StreamBuilder(
               stream: fireMassages.snapshots(),
               builder: (context,snapshot){
-               if(snapshot.hasData){
+              if(snapshot.hasData){
                 coreController.massageCubit.getMassages(sender.email,receiver.email);
-                Future.delayed(const Duration(milliseconds: 350),(){
+                Future.delayed(const Duration(milliseconds: 200),(){
                   coreController.chatsListVeiwController.animateTo(
                     coreController.chatsListVeiwController.position.maxScrollExtent,
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 50),
                     curve: Curves.easeIn,
                   );
                 });
-               }
-               return const SizedBox();
+              }
+              return const SizedBox();
               },
             ),
           ],
