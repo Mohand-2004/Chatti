@@ -10,7 +10,8 @@ import 'package:my_app/models/massage.dart';
 import 'package:my_app/models/time.dart';
 import 'package:my_app/models/user.dart';
 import 'package:my_app/widgets/friend_chat_bubble.dart';
-import 'package:my_app/widgets/massaging_text_feild.dart';
+import 'package:my_app/widgets/android_massaging_text_feild.dart';
+import 'package:my_app/widgets/ios_massaging_text_feild.dart';
 import 'package:my_app/widgets/self_chat_bubble.dart';
 import 'dart:io' show Platform;
 
@@ -129,6 +130,7 @@ class ChatPage extends StatelessWidget {
                               );
                             },
                             itemCount: state.massages.length,
+                            physics: const BouncingScrollPhysics(),
                           ),
                         );
                       }
@@ -138,32 +140,40 @@ class ChatPage extends StatelessWidget {
                     },
                   ),
                         
-                  // text feild
-                  Padding(
+                  // adaptive massaging text feild
+                  Platform.isIOS ? IOSMassagingTextFeild(
+                    height: 90.h,
+                    submitCommand: (massage) {
+                      coreController.addMassageToFireBase(
+                        Massage(
+                          content: massage,
+                          senderEmail: sender.email,
+                          receiverEmail: receiver.email,
+                          docId: 'null',
+                          date: Date.current,
+                          time: Time.current,
+                        )
+                      );
+                    },
+                  ) : AndroidMassagingTextFeild(
+                    height: 50.h,
+                    radius: 10.r,
+                    borderWidth: 3.r,
+                    bottomSpace: 5.h,
                     padding: EdgeInsets.all(8.r),
-                    child: MassagingTextFeild(
-                      height: 50.h,
-                      radius: 10.r,
-                      borderWidth: 3.r,
-                      submitCommand: (String massageContent){
-                        coreController.addMassageToFireBase(
-                          Massage(
-                            content: massageContent,
-                            senderEmail: sender.email,
-                            receiverEmail: receiver.email,
-                            docId: 'null',
-                            date: Date.current,
-                            time: Time.current,
-                          ),
-                        );
-                      },
-                    ),
+                    submitCommand: (String massageContent){
+                      coreController.addMassageToFireBase(
+                        Massage(
+                          content: massageContent,
+                          senderEmail: sender.email,
+                          receiverEmail: receiver.email,
+                          docId: 'null',
+                          date: Date.current,
+                          time: Time.current,
+                        ),
+                      );
+                    },
                   ),
-                        
-                  // iOS bottom space
-                  SizedBox(
-                    height: (Platform.isIOS ? 18.h : 5.h),
-                  )
                 ],
               ),
             ),
