@@ -102,6 +102,9 @@ class ChatPage extends StatelessWidget {
               color: Colors.white,
               child: Column(
                 children: [
+                  // top space
+                  SizedBox(height: 8.h,),
+
                   // massages listVeiw
                   BlocBuilder<MassagesCubit,MassageState>(
                     builder: (context, state) {
