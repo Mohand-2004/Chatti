@@ -19,6 +19,18 @@ class AppUser{
       docId: docId,
     );
   }
+  factory AppUser.fromDataBaseJson(Map json){
+    return AppUser(
+      name: json['name'],
+      email: json['email'],
+      password: json['password'],
+      docId: json['id'],
+    );
+  }
+  @override
+  String toString(){
+    return 'name : $name\nemail : $email\npassword : $password\nid : $_docId';
+  }
   String get email => _email;
   String get password => _password;
   String get name => _name;

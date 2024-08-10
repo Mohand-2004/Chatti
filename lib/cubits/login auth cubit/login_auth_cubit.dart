@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/cubits/login%20auth%20cubit/states.dart';
+import 'package:my_app/database/login_token_check.dart';
 import 'package:my_app/models/chat.dart';
 import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/user.dart';
 
 class LoginAuthCubit extends Cubit<LoginState>{
   AppUser? currentUser;
-  LoginAuthCubit() : super(LoginNullState());
+  LoginAuthCubit() : super(LoginSplashState());
 
   Future<AppUser?> _selectUserByEmail(String email) async {
     var response = await fireUsers.get();
@@ -36,6 +37,7 @@ class LoginAuthCubit extends Cubit<LoginState>{
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email,password: password);
       currentUser = await _selectUserByEmail(email);
+      inserttocheckdatabase(currentUser!);
       emit(LoginSuccessState(await _selectChatsByEmail(email)));
     }
     on FirebaseAuthException{
@@ -43,10 +45,23 @@ class LoginAuthCubit extends Cubit<LoginState>{
     }
   }
 
+  void autoStartLogin() async {
+    Future.delayed(const Duration(seconds: 1),() async {
+      AppUser? loggedUser = await fetchcheck();
+      if(loggedUser != null){
+        currentUser = loggedUser;
+        emit(LoginSuccessState(await _selectChatsByEmail(loggedUser.email)));
+        return ;
+      }
+      emit(LoginNullState());
+    });
+  }
+
   void logout() async {
     emit(LoginLoadingState());
     try{
       await FirebaseAuth.instance.signOut();
+      resetcheckdatabase();
       emit(LoginNullState());
     }
     on FirebaseAuthException{

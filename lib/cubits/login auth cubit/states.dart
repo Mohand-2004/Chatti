@@ -14,3 +14,4 @@ class WrongEmailOrPasswordState extends LoginState{
   }
 }
 class LoginLoadingState extends LoginState{}
+class LoginSplashState extends LoginState{}

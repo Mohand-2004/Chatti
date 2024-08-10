@@ -24,6 +24,10 @@ class CoreController{
   MassagesCubit massageCubit = MassagesCubit();
   MediaQueryData? mediaQuery;
 
+  CoreController(){
+    loginAuthCubit.autoStartLogin();
+  }
+
   void addChatToFireBase(String firstEmail,String secondEmail){
     fireChats.add(
       {
