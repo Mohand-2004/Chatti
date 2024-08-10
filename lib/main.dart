@@ -52,6 +52,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(DevicePreview(builder:(context) => const MyApp(),));
-  //runApp(const MyApp());
+  //runApp(DevicePreview(builder:(context) => const MyApp(),));
+  runApp(const MyApp());
 }

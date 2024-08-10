@@ -9,6 +9,7 @@ import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/massage.dart';
 import 'package:my_app/models/time.dart';
 import 'package:my_app/models/user.dart';
+import 'package:my_app/widgets/date_show_container.dart';
 import 'package:my_app/widgets/friend_chat_bubble.dart';
 import 'package:my_app/widgets/android_massaging_text_feild.dart';
 import 'package:my_app/widgets/ios_massaging_text_feild.dart';
@@ -100,7 +101,13 @@ class ChatPage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              color: Colors.white,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/chat background.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
               child: Column(
                 children: [
                   // top space
@@ -116,6 +123,10 @@ class ChatPage extends StatelessWidget {
                             itemBuilder: (context, index){
                               return Column(
                                 children: [
+                                  index == 0 ? DateShowContainer(
+                                    height: (MediaQuery.of(context).size.width > 500 ? 35.h : 30.h),
+                                    date: state.massages[0].date,
+                                  ) : const SizedBox(height: 0,),
                                   state.massages[index].senderEmail == sender.email ? SelfChatBubble(
                                       radius: 20.r,
                                       massage: state.massages[index],
@@ -123,9 +134,11 @@ class ChatPage extends StatelessWidget {
                                     radius: 20.r,
                                     massage: state.massages[index],
                                   ),
-                                  const SizedBox(
-                                    height: 25,
-                                  ),
+                                  (index != state.massages.length-1 && !state.massages[index].date.isEqual(state.massages[index+1].date)) ? DateShowContainer(
+                                    height: (MediaQuery.of(context).size.width > 500 ? 35.h : 30.h),
+                                    date: state.massages[index+1].date,
+                                    verticalPadding: 15.h,
+                                  ) : SizedBox(height: 25.h,) 
                                 ],
                               );
                             },
@@ -143,7 +156,8 @@ class ChatPage extends StatelessWidget {
                   // adaptive massaging text feild
                   Platform.isIOS ? IOSMassagingTextFeild(
                     height: 90.h,
-                    submitCommand: (massage) {
+                    submitCommand: (massage){
+                      coreController.addChatIfNotExist(receiver);
                       coreController.addMassageToFireBase(
                         Massage(
                           content: massage,
@@ -152,7 +166,7 @@ class ChatPage extends StatelessWidget {
                           docId: 'null',
                           date: Date.current,
                           time: Time.current,
-                        )
+                        ),
                       );
                     },
                   ) : AndroidMassagingTextFeild(
@@ -162,6 +176,7 @@ class ChatPage extends StatelessWidget {
                     bottomSpace: 5.h,
                     padding: EdgeInsets.all(8.r),
                     submitCommand: (String massageContent){
+                      coreController.addChatIfNotExist(receiver);
                       coreController.addMassageToFireBase(
                         Massage(
                           content: massageContent,

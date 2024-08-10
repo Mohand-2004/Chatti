@@ -7,6 +7,7 @@ import 'package:my_app/cubits/massages%20cubit/massages_cubit.dart';
 import 'package:my_app/models/chat.dart';
 import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/massage.dart';
+import 'package:my_app/models/user.dart';
 
 class CoreController{
   GlobalKey<FormState> signUpValidationsKey = GlobalKey();
@@ -46,6 +47,18 @@ class CoreController{
         "year" : massage.date.year,
       }
     );
+  }
+
+  void addChatIfNotExist(AppUser user) async {
+    var response = await fireChats.get();
+    for(var chat in response.docs){
+      if(
+        (chat['first_user_email'] == user.email && chat['second_user_email'] == coreController.loginAuthCubit.currentUser!.email)||
+        (chat['second_user_email'] == user.email && chat['first_user_email'] == coreController.loginAuthCubit.currentUser!.email)){
+        return ;
+      }
+    }
+    addChatToFireBase(user.email,loginAuthCubit.currentUser!.email);
   }
 
   void signUp(){
