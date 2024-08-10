@@ -18,6 +18,7 @@ class CoreController{
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController emailLoginController = TextEditingController();
   TextEditingController passwordLoginController = TextEditingController();
+  ScrollController chatsListVeiwController = ScrollController();
   SignUpAuthCubit signUpAuthCubit = SignUpAuthCubit();
   LoginAuthCubit loginAuthCubit = LoginAuthCubit();
   AddChatCubit chatCubit = AddChatCubit();

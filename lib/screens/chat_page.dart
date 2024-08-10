@@ -119,6 +119,7 @@ class ChatPage extends StatelessWidget {
                       if(state is GetMassageState){
                         return Expanded(
                           child: ListView.builder(
+                            controller: coreController.chatsListVeiwController,
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                             itemBuilder: (context, index){
                               return Column(
@@ -198,7 +199,14 @@ class ChatPage extends StatelessWidget {
               builder: (context,snapshot){
                if(snapshot.hasData){
                 coreController.massageCubit.getMassages(sender.email,receiver.email);
-               } 
+                Future.delayed(const Duration(milliseconds: 350),(){
+                  coreController.chatsListVeiwController.animateTo(
+                    coreController.chatsListVeiwController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                  );
+                });
+               }
                return const SizedBox();
               },
             ),
