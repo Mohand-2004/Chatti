@@ -139,32 +139,24 @@ class _HomePageState extends State<HomePage> {
                     )
                   : ListView.builder(
                       itemBuilder: (context,index){
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context){
-                                      return ChatPage(
-                                        sender: widget.user,
-                                        receiver: (state is ChatsRefreshState ? state.newChats[index].user : widget.firebaseFrirnds[index].user),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                              child: FreindChat(
-                                height: 100.h,
-                                chat: (state is ChatsRefreshState ? state.newChats[index] : widget.firebaseFrirnds[index]),
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context){
+                                  return ChatPage(
+                                    sender: widget.user,
+                                    receiver: (state is ChatsRefreshState ? state.newChats[index].user : widget.firebaseFrirnds[index].user),
+                                  );
+                                },
                               ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            )
-                          ],
+                            );
+                          },
+                          child: FreindChat(
+                            height: (MediaQuery.of(context).size.width > 500 ? 90.h : ((MediaQuery.of(context).size.height / MediaQuery.of(context).size.width) <= 1.79 ? 97.h : 86.h)),
+                            chat: (state is ChatsRefreshState ? state.newChats[index] : widget.firebaseFrirnds[index]),
+                          ),
                         );
                       },
                       itemCount: (state is ChatsRefreshState ? state.newChats.length : widget.firebaseFrirnds.length),
