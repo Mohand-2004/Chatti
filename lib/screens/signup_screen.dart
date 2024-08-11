@@ -33,24 +33,22 @@ class SignupScreen extends StatelessWidget {
                     MediaQuery.of(context).size.width,
                     MediaQuery.of(context).size.height * 0.07,
                   ),
-                  child: Expanded(
-                    child: SizedBox(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 30.h, left: Platform.isIOS ? 10.w : 7.w),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                size: 27.r,
-                                Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-                                color: const Color.fromARGB(255, 123, 123, 123),
-                              ),
+                  child: SizedBox(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 30.h, left: Platform.isIOS ? 10.w : 7.w),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              size: 27.r,
+                              Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
+                              color: const Color.fromARGB(255, 123, 123, 123),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

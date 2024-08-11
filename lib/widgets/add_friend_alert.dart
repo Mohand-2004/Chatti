@@ -63,30 +63,26 @@ class _AddFriendAlertState extends State<AddFriendAlert>{
             ),
             Form(
               key: formKey,
-              child: SizedBox(
-                height: 70.h,
-                child: Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: BlocBuilder<AddChatCubit,AddChatState>(
-                      builder: (context, state){
-                        return Entry(
-                          errortext: (state is NoUserState ? "There is no user has this email" : (state is ExistChatState?  "There is already a chat with this user" : errortext)),
-                          errorTextSize: (state is NoUserState ? 12 : (state is ExistChatState ? 10 : errorTextSize)),
-                          iconDivederSpace: 15,
-                          hinttext: 'Email',
-                          icon: Icons.email,
-                          controller: controller,
-                          validations: (string) {
-                            if (string != null && !coreController.isValidEmail(string)){
-                              return 'Email is not valid';
-                            }
-                            return null;
-                          },
-                        );
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: BlocBuilder<AddChatCubit,AddChatState>(
+                  builder: (context, state){
+                    return Entry(
+                      height: 70.h,
+                      errortext: (state is NoUserState ? "There is no user has this email" : (state is ExistChatState?  "There is already a chat with this user" : errortext)),
+                      errorTextSize: (state is NoUserState ? 12 : (state is ExistChatState ? 10 : errorTextSize)),
+                      iconDivederSpace: 15,
+                      hinttext: 'Email',
+                      icon: Icons.email,
+                      controller: controller,
+                      validations: (string) {
+                        if (string != null && !coreController.isValidEmail(string)){
+                          return 'Email is not valid';
+                        }
+                        return null;
                       },
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ),

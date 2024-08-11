@@ -9,9 +9,10 @@ class Entry extends StatefulWidget{
   final TextEditingController controller;
   String? errortext;
   double? errorTextSize;
+  final double? height;
   String? Function(String? string)? validations;
   final double iconDivederSpace;
-  Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations,this.errorTextSize = 17,this.iconDivederSpace = 0});
+  Entry({super.key,required this.hinttext,required this.icon,this.errortext,required this.controller,this.validations,this.errorTextSize = 17,this.iconDivederSpace = 0,this.height});
   @override
   State<Entry> createState() => _EntryState();
 }
@@ -24,6 +25,7 @@ class _EntryState extends State<Entry>{
   @override
   Widget build(BuildContext context){
     return Container(
+      height: widget.height,
       decoration: BoxDecoration(
         color: AppColors.hellBlue,
         borderRadius: BorderRadius.circular(23.r)
