@@ -110,7 +110,7 @@ class CoreController{
           break;
       }
       newMassage += massage[i];
-      if(counter > 45){
+      if(counter > 32){
         counter = 0;
         newMassage += '\n';
       }

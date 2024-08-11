@@ -202,13 +202,6 @@ class ChatPage extends StatelessWidget {
               builder: (context,snapshot){
               if(snapshot.hasData){
                 coreController.massageCubit.getMassages(sender.email,receiver.email);
-                Future.delayed(const Duration(milliseconds: 200),(){
-                  coreController.chatsListVeiwController.animateTo(
-                    coreController.chatsListVeiwController.position.maxScrollExtent,
-                    duration: const Duration(milliseconds: 50),
-                    curve: Curves.easeIn,
-                  );
-                });
               }
               return const SizedBox();
               },

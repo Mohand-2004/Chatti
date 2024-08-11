@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/cubits/core_controller.dart';
 import 'package:my_app/cubits/massages%20cubit/states.dart';
 import 'package:my_app/models/firebase_collections.dart';
 import 'package:my_app/models/massage.dart';
@@ -26,5 +28,12 @@ class MassagesCubit extends Cubit<MassageState>{
       }
     });
     emit(GetMassageState(massages: massages));
+    Future.delayed(const Duration(milliseconds: 200),(){
+      coreController.chatsListVeiwController.animateTo(
+        coreController.chatsListVeiwController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 50),
+        curve: Curves.easeIn,
+      );
+    });
   }
 }
